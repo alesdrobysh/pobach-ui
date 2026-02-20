@@ -1,0 +1,46 @@
+.message {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.confirmButton {
+  background: var(--error);
+  color: var(--text-inverse);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.confirmButton:hover,
+.confirmButton:focus {
+  background: var(--error-hover);
+  transform: translateY(-1px);
+}
+
+.cancelButton {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.cancelButton:hover,
+.cancelButton:focus {
+  background: var(--bg-card-hover);
+  transform: translateY(-1px);
+}

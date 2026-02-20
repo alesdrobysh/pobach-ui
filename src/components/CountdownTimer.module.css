@@ -1,0 +1,15 @@
+.timer {
+  font-family: var(--font-geist-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: inline-block;
+  letter-spacing: 0.025em;
+}
+
+@media (min-width: 768px) {
+  .timer {
+    font-size: 1.25rem;
+  }
+}

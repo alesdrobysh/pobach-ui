@@ -1,0 +1,10 @@
+# Development artifacts
+.next/
+node_modules/
+coverage/
+
+# Cache directories
+analytics_cache/
+
+# Build artifacts
+*.log

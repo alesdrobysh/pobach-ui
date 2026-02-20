@@ -1,0 +1,48 @@
+"use client";
+
+import posthog from "posthog-js";
+import { PostHogProvider as PHProvider } from "posthog-js/react";
+import { useEffect, useState, useCallback } from "react";
+import { AnalyticsContext } from "@/contexts/AnalyticsContext";
+import { initPostHog } from "@/infrastructure/analytics/posthog";
+import { ConsentRepository } from "@/infrastructure/repositories/ConsentRepository";
+
+export function PostHogProvider({ children }: { children: React.ReactNode }) {
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [hasConsented, setHasConsented] = useState<boolean | null>(null);
+
+  // 1. Check consent on mount
+  useEffect(() => {
+    const consented = ConsentRepository.hasConsented();
+    setHasConsented(consented);
+
+    if (consented && !isInitialized) {
+      if (initPostHog()) {
+        setIsInitialized(true);
+      }
+    }
+  }, [isInitialized]);
+
+  // 2. Action to give consent
+  const giveConsent = useCallback(() => {
+    ConsentRepository.saveConsent();
+    setHasConsented(true);
+
+    // Initialize immediately
+    if (initPostHog()) {
+      setIsInitialized(true);
+    }
+  }, []);
+
+  const value = {
+    isInitialized,
+    hasConsented,
+    giveConsent,
+  };
+
+  return (
+    <AnalyticsContext.Provider value={value}>
+      <PHProvider client={posthog}>{children}</PHProvider>
+    </AnalyticsContext.Provider>
+  );
+}
