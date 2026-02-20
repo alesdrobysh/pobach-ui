@@ -76,3 +76,7 @@ Word embeddings live in a separate private repository. Clone it manually into `d
 ## Contact
 
 support@pobach.app
+
+## License
+
+The code in this repository is licensed under the [MIT License](LICENSE).
