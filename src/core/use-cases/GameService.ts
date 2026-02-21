@@ -205,7 +205,10 @@ export class GameService {
       const offset = i * vecSize;
       // Manual unrolling is rarely needed in V8, simple loop is fine
       for (let j = 0; j < vecSize; j++) {
-        dot += this.vectors?.[offset + j] * secretVec[j];
+        const vec = this.vectors?.[offset + j] || 0;
+        const secret = secretVec?.[j] || 0;
+
+        dot += vec * secret;
       }
       scores[i] = this.norms[i] > 0 ? dot / this.norms[i] : 0;
     }

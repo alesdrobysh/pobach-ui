@@ -29,6 +29,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Патрабуецца слова" }, { status: 400 });
     }
 
+    if (!dayIndex || typeof dayIndex !== "number") {
+      return NextResponse.json(
+        { error: "Патрабуецца dayIndex" },
+        { status: 400 },
+      );
+    }
+
     // Validate dayIndex parameter
     const currentDayIndex = gameService.getDailySecret().dayIndex;
     if (!validateDayIndex(dayIndex, currentDayIndex)) {
