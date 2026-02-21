@@ -2,12 +2,15 @@
 
 import { Share2 } from "lucide-react";
 import { useState } from "react";
+import type { Guess } from "@/core/entities/game";
 import { EPOCH_DATE } from "@/lib/config";
+import { pluralizeHintsInstrumental } from "@/lib/utils";
 import styles from "./ShareButton.module.css";
 
 type ShareButtonProps = {
   dayIndex: number;
-  guesses: Array<{ word: string; rank: number }>;
+  guesses: Guess[];
+  won: boolean;
 };
 
 function getGuessWord(count: number): string {
@@ -19,7 +22,7 @@ function getGuessWord(count: number): string {
   return "спроб";
 }
 
-function generateShareText({ dayIndex, guesses }: ShareButtonProps): string {
+function generateShareText({ dayIndex, guesses, won }: ShareButtonProps): string {
   // Convert dayIndex back to date using the same epoch as game-engine
   const epoch = new Date(EPOCH_DATE);
   const date = new Date(epoch.getTime() + dayIndex * 24 * 60 * 60 * 1000);
@@ -61,7 +64,14 @@ function generateShareText({ dayIndex, guesses }: ShareButtonProps): string {
   // Status line with proper grammar
   const guessCount = guesses.length;
   const guessWord = getGuessWord(guessCount);
-  const status = `Я адгадаў за ${guessCount} ${guessWord}`;
+  const hintsCount = guesses.filter((g) => g.isHint).length;
+  const hintsText =
+    hintsCount > 0
+      ? ` (з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)})`
+      : "";
+  const status = won
+    ? `Я адгадаў за ${guessCount} ${guessWord}${hintsText}`
+    : `Я здаўся пасля ${guessCount} ${guessWord}${hintsText}`;
 
   return `Побач ${formattedDate}\n${status}\n${emojiLines}\npobach.app`;
 }
@@ -89,7 +99,7 @@ async function handleShare(
   }
 }
 
-export default function ShareButton({ dayIndex, guesses }: ShareButtonProps) {
+export default function ShareButton({ dayIndex, guesses, won }: ShareButtonProps) {
   const [isSharing, setIsSharing] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
@@ -97,7 +107,7 @@ export default function ShareButton({ dayIndex, guesses }: ShareButtonProps) {
     if (isSharing) return;
 
     setIsSharing(true);
-    const shareText = generateShareText({ dayIndex, guesses });
+    const shareText = generateShareText({ dayIndex, guesses, won });
 
     const result = await handleShare(shareText);
 

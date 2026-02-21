@@ -2,7 +2,11 @@
 
 import type { Guess } from "@/core/entities/game";
 import { getCurrentDayIndex } from "@/lib/storage";
-import { pluralize } from "@/lib/utils";
+import {
+  pluralize,
+  pluralizeHintsInstrumental,
+  pluralizeHintsAccusative,
+} from "@/lib/utils";
 import CountdownTimer from "./CountdownTimer";
 import DictionaryLink from "./DictionaryLink";
 import styles from "./FinishCard.module.css";
@@ -25,6 +29,7 @@ export default function FinishCard({
   targetWord,
 }: FinishCardProps) {
   const attempts = guesses.length;
+  const hintsCount = guesses.filter((g) => g.isHint).length;
 
   // Check if new day is available
   const currentDayIndex = getCurrentDayIndex();
@@ -43,8 +48,8 @@ export default function FinishCard({
         <h2>{isWin ? "Віншуем!" : "Таямніца раскрыта!"}</h2>
         <p className={styles.finishStats}>
           {isWin
-            ? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}! Заўтра будзе новае слова — заходзьце праверыць веды!`
-            : `Таямніца раскрыта! 🔓 Дзякуй за гульню. Заўтра будзе новае слова — заходзьце праверыць веды!`}
+            ? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` (з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)})` : ""}! Заўтра будзе новае слова — заходзьце праверыць веды!`
+            : `Таямніца раскрыта! 🔓 Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""} Заўтра будзе новае слова — заходзьце праверыць веды!`}
         </p>
         {!isWin && targetWord && (
           <p className={styles.targetWord}>
@@ -60,7 +65,7 @@ export default function FinishCard({
       </div>
 
       <div className={styles.shareSection}>
-        <ShareButton dayIndex={dayIndex} guesses={guesses} />
+        <ShareButton dayIndex={dayIndex} guesses={guesses} won={isWin} />
       </div>
 
       <div className={styles.nextGameSection}>

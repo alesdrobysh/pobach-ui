@@ -299,7 +299,7 @@ export function useGame(): UseGameReturn {
         return;
       }
 
-      const newGuess = { word: data.word, rank: data.rank };
+      const newGuess = { word: data.word, rank: data.rank, isHint: true as const };
       setLastGuess(newGuess);
 
       trackHint(data.word, data.rank);

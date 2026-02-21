@@ -1,6 +1,7 @@
 export interface Guess {
   word: string;
   rank: number;
+  isHint?: boolean;
 }
 
 export interface CurrentGame {
