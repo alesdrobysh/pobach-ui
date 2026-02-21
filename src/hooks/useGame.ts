@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { CurrentGame, Guess } from "@/core/entities/game";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { triggerConfetti } from "@/lib/confetti";
+import { vibrate } from "@/lib/haptics";
 import {
   cleanupOldHistoryEntries,
   getCurrentDayIndex,
@@ -144,6 +145,7 @@ export function useGame(): UseGameReturn {
       if (!wordToGuess || loading || won) return;
 
       if (guesses.some((g) => g.word === wordToGuess)) {
+        vibrate("short");
         setErrorWord(wordToGuess);
         setError("вы ўжо ўводзілі гэтае слова");
         setTimeout(() => {
@@ -177,6 +179,7 @@ export function useGame(): UseGameReturn {
         }
 
         if (data.isUnknown) {
+          vibrate("short");
           trackUnknownWord(wordToGuess);
           setErrorWord(wordToGuess);
           setError("я не ведаю гэтага слова");
@@ -216,6 +219,7 @@ export function useGame(): UseGameReturn {
           );
           setGuesses(newGuesses);
           if (newGuess.rank === 1) {
+            vibrate("long");
             setWon(true);
             setGameOver(true);
             triggerConfetti();
@@ -320,6 +324,7 @@ export function useGame(): UseGameReturn {
       );
       setGuesses(newGuesses);
       if (newGuess.rank === 1) {
+        vibrate("long");
         setWon(true);
         setGameOver(true);
         triggerConfetti();
