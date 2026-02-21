@@ -1,4 +1,3 @@
-import { calculateStats } from "@/lib/stats";
 import type {
   CurrentGame,
   GameStats,
@@ -6,6 +5,7 @@ import type {
   HistoryRecord,
   StorageV2,
 } from "@/core/entities/game";
+import { calculateStats } from "@/lib/stats";
 
 const STORAGE_KEY = "pobach_storage";
 

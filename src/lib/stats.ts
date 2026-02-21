@@ -1,6 +1,6 @@
+import type { GameStats, HistoryRecord } from "@/core/entities/game";
 import { EPOCH_DATE } from "@/lib/config";
 import { getCurrentDayIndex } from "@/lib/storage";
-import type { GameStats, HistoryRecord } from "@/core/entities/game";
 
 export function calculateStats(history: HistoryRecord[]): GameStats {
   const gamesPlayed = history.length;

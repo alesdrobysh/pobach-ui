@@ -1,5 +1,5 @@
-import fs from "fs/promises";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
 import type { IGameRepository } from "../../core/interfaces/IGameRepository";
 
 /**
@@ -49,9 +49,9 @@ export class FileGameRepository implements IGameRepository {
 
       // Build word-to-index map for fast lookups
       const wordToIndex = new Map<string, number>();
-      words.forEach((word, index) =>
-        wordToIndex.set(word.toLowerCase(), index),
-      );
+      for (let index = 0; index < words.length; index++) {
+        wordToIndex.set(words[index].toLowerCase(), index);
+      }
 
       console.log(
         `✅ Loaded ${words.length} words, ${targets.length} targets, ${pool.length} pool words from ${resolvedDataDir}.`,

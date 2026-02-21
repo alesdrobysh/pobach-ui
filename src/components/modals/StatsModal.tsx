@@ -1,9 +1,9 @@
 "use client";
 import { Check, Flame, X } from "lucide-react";
 import type { ReactNode } from "react";
+import type { HistoryRecord } from "@/core/entities/game";
 import { formatRelativeDate } from "@/lib/stats";
 import { getHistory, getStats } from "@/lib/storage";
-import type { HistoryRecord } from "@/core/entities/game";
 import Modal from "./Modal";
 import styles from "./StatsModal.module.css";
 

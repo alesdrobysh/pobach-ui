@@ -72,7 +72,8 @@ export default function TopWordsList({
           {isLoading && (
             <div className={styles.skeletonContainer}>
               {Array.from({ length: 10 }, (_, i) => (
-                <div key={i} className={styles.skeletonRow}>
+                // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
+                <div key={`skeleton-${i}`} className={styles.skeletonRow}>
                   <div className={styles.skeletonRank}></div>
                   <div className={styles.skeletonWord}></div>
                 </div>

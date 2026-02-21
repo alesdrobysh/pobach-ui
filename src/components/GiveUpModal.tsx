@@ -1,7 +1,7 @@
 "use client";
 
-import Modal from "./modals/Modal";
 import styles from "./GiveUpModal.module.css";
+import Modal from "./modals/Modal";
 
 type GiveUpModalProps = {
   onConfirm: () => void;

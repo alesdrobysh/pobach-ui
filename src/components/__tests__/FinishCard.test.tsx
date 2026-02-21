@@ -19,10 +19,10 @@ jest.mock("@/components/ShareButton", () => {
     guesses,
   }: {
     dayIndex: number;
-    guesses: any[];
+    guesses: unknown[];
   }) {
     return (
-      <button data-testid="share-button">
+      <button type="button" data-testid="share-button">
         Share results for day {dayIndex} with {guesses.length} guesses
       </button>
     );

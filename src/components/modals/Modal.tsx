@@ -26,11 +26,19 @@ export default function Modal({ children, onClose, title }: ModalProps) {
     <div
       className={styles.modalOverlay}
       onClick={onClose}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only prevents overlay close */}
+      <div
+        className={styles.modal}
+        role="document"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className={styles.modalHeader}>
           <h2 id="modal-title">{title}</h2>
           <button

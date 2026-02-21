@@ -22,7 +22,11 @@ function getGuessWord(count: number): string {
   return "спроб";
 }
 
-function generateShareText({ dayIndex, guesses, won }: ShareButtonProps): string {
+function generateShareText({
+  dayIndex,
+  guesses,
+  won,
+}: ShareButtonProps): string {
   // Convert dayIndex back to date using the same epoch as game-engine
   const epoch = new Date(EPOCH_DATE);
   const date = new Date(epoch.getTime() + dayIndex * 24 * 60 * 60 * 1000);
@@ -99,7 +103,11 @@ async function handleShare(
   }
 }
 
-export default function ShareButton({ dayIndex, guesses, won }: ShareButtonProps) {
+export default function ShareButton({
+  dayIndex,
+  guesses,
+  won,
+}: ShareButtonProps) {
   const [isSharing, setIsSharing] = useState(false);
   const [showToast, setShowToast] = useState(false);
 

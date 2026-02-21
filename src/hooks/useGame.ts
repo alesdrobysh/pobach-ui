@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { CurrentGame, Guess } from "@/core/entities/game";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { triggerConfetti } from "@/lib/confetti";
@@ -146,7 +146,10 @@ export function useGame(): UseGameReturn {
       if (guesses.some((g) => g.word === wordToGuess)) {
         setErrorWord(wordToGuess);
         setError("вы ўжо ўводзілі гэтае слова");
-        setTimeout(() => { setError(null); setErrorWord(null); }, 2000);
+        setTimeout(() => {
+          setError(null);
+          setErrorWord(null);
+        }, 2000);
         setInput("");
         return;
       }
@@ -177,7 +180,10 @@ export function useGame(): UseGameReturn {
           trackUnknownWord(wordToGuess);
           setErrorWord(wordToGuess);
           setError("я не ведаю гэтага слова");
-          setTimeout(() => { setError(null); setErrorWord(null); }, 2000);
+          setTimeout(() => {
+            setError(null);
+            setErrorWord(null);
+          }, 2000);
           return;
         }
 
@@ -242,6 +248,7 @@ export function useGame(): UseGameReturn {
       trackGuess,
       trackUnknownWord,
       trackWin,
+      trackGameStart,
     ],
   );
 
@@ -299,7 +306,11 @@ export function useGame(): UseGameReturn {
         return;
       }
 
-      const newGuess = { word: data.word, rank: data.rank, isHint: true as const };
+      const newGuess = {
+        word: data.word,
+        rank: data.rank,
+        isHint: true as const,
+      };
       setLastGuess(newGuess);
 
       trackHint(data.word, data.rank);

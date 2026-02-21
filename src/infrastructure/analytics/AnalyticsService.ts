@@ -62,5 +62,4 @@ export class AnalyticsService {
       best_rank: bestRank,
     });
   }
-
 }

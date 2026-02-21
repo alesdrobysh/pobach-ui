@@ -55,7 +55,7 @@ export class GameService {
         let sumSq = 0;
         const offset = i * vecSize;
         for (let j = 0; j < vecSize; j++) {
-          const v = this.vectors![offset + j];
+          const v = this.vectors?.[offset + j];
           sumSq += v * v;
         }
         this.norms[i] = Math.sqrt(sumSq);
@@ -107,7 +107,10 @@ export class GameService {
     const { A, B, N } = params;
     const lcgIndex = (((A * dayIndex + B) % N) + N) % N;
 
-    const rotationResult = this.poolingService.getWordForDay(dayIndex, lcgIndex);
+    const rotationResult = this.poolingService.getWordForDay(
+      dayIndex,
+      lcgIndex,
+    );
     return rotationResult.word;
   }
 
@@ -167,8 +170,9 @@ export class GameService {
   // Pre-calculate rank for the secret word against ALL words
   // This is expensive (~10-20ms), so we cache it for the day
   private getDailyRankings(dayIndex: number, secretWord: string): Int32Array {
-    if (this.dailyRankingsCache.has(dayIndex)) {
-      return this.dailyRankingsCache.get(dayIndex)!;
+    const cached = this.dailyRankingsCache.get(dayIndex);
+    if (cached) {
+      return cached;
     }
 
     // 1. Get Secret Vector
@@ -184,7 +188,7 @@ export class GameService {
     }
 
     const vecSize = 384;
-    const secretVec = this.vectors!.subarray(
+    const secretVec = this.vectors?.subarray(
       secretIdx * vecSize,
       (secretIdx + 1) * vecSize,
     );
@@ -201,7 +205,7 @@ export class GameService {
       const offset = i * vecSize;
       // Manual unrolling is rarely needed in V8, simple loop is fine
       for (let j = 0; j < vecSize; j++) {
-        dot += this.vectors![offset + j] * secretVec[j];
+        dot += this.vectors?.[offset + j] * secretVec[j];
       }
       scores[i] = this.norms[i] > 0 ? dot / this.norms[i] : 0;
     }
@@ -219,9 +223,9 @@ export class GameService {
     // Clear old cache to save memory (keep only today)
     if (this.dailyRankingsCache.size > 2) {
       const keys = Array.from(this.dailyRankingsCache.keys());
-      keys
-        .filter((k) => k !== dayIndex)
-        .forEach((k) => this.dailyRankingsCache.delete(k));
+      for (const k of keys.filter((k) => k !== dayIndex)) {
+        this.dailyRankingsCache.delete(k);
+      }
     }
 
     return indices;
@@ -236,10 +240,7 @@ export class GameService {
       .replace(/`/g, "'");
   }
 
-  public makeGuess(
-    word: string,
-    dayIndex?: number,
-  ): GuessResult {
+  public makeGuess(word: string, dayIndex?: number): GuessResult {
     this.ensureInitialized();
     const cleanWord = this.normalizeWord(word);
 
@@ -261,7 +262,10 @@ export class GameService {
     const rankings = this.getDailyRankings(dayIndexParam, secretWord);
 
     // Find where the user's word is in the list
-    const userWordIdx = this.wordToIndex.get(cleanWord)!;
+    const userWordIdx = this.wordToIndex.get(cleanWord);
+    if (userWordIdx === undefined) {
+      throw new Error(`Word not found in index: ${cleanWord}`);
+    }
 
     // indexOf is O(N), but on Int32Array it's fast.
     // Optimization: We could build a reverse map (WordIdx -> Rank), but that uses RAM.

@@ -47,7 +47,12 @@ export default function GuessInput({
       </form>
       {error && (
         <div className={styles.error} id="error-message" role="alert">
-          {errorWord && <><strong>«{errorWord}»</strong> — </>}{error}
+          {errorWord && (
+            <>
+              <strong>«{errorWord}»</strong> —{" "}
+            </>
+          )}
+          {error}
         </div>
       )}
 

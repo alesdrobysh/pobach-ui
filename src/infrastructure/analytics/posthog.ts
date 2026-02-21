@@ -17,6 +17,7 @@ export function initPostHog(): boolean {
     return false;
   }
   // Prevent double initialization
+  // biome-ignore lint/suspicious/noExplicitAny: posthog internal property not in type definitions
   if ((posthog as any).__loaded) {
     return true;
   }

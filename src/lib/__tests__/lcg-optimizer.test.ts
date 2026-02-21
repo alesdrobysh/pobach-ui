@@ -3,8 +3,8 @@ import {
   calculateOverallScore,
   evaluateLCGQuality,
   findOptimalLCGParams,
-  generateLCGSequence,
   generateDirectSequence,
+  generateLCGSequence,
 } from "../lcg-optimizer";
 import {
   gcd,
@@ -158,12 +158,17 @@ describe("LCG Optimizer", () => {
       // but it is coprime, so it should get a score of 20 now.
       const badParams = { N: 337, A: 16807, B: 0 };
       const badQuality = evaluateLCGQuality(badParams);
-      expect(badQuality.multiplierQuality).toBe(20); 
+      expect(badQuality.multiplierQuality).toBe(20);
 
       // Find actual optimal parameters and verify they have full period
       const goodParams = findOptimalLCGParams(337);
       const goodQuality = evaluateLCGQuality(goodParams);
-      console.log('Optimized Params for 337:', goodParams, 'Quality:', goodQuality);
+      console.log(
+        "Optimized Params for 337:",
+        goodParams,
+        "Quality:",
+        goodQuality,
+      );
       expect(goodQuality.period).toBe(337);
       expect(goodQuality.multiplierQuality).toBeGreaterThanOrEqual(0);
     });

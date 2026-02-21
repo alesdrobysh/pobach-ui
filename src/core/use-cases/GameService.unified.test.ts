@@ -25,7 +25,7 @@ describe("GameService - Unified File Structure", () => {
         if (args.length === 0) {
           super(mockNow);
         } else {
-          // @ts-ignore
+          // @ts-expect-error
           super(...args);
         }
       }

@@ -4,8 +4,8 @@ import type { Guess } from "@/core/entities/game";
 import { getCurrentDayIndex } from "@/lib/storage";
 import {
   pluralize,
-  pluralizeHintsInstrumental,
   pluralizeHintsAccusative,
+  pluralizeHintsInstrumental,
 } from "@/lib/utils";
 import CountdownTimer from "./CountdownTimer";
 import DictionaryLink from "./DictionaryLink";

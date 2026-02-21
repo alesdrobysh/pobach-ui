@@ -1,5 +1,4 @@
 import {
-  gcd,
   hullDobellValidate,
   isCoprime,
   multiplicativeOrder,
@@ -114,7 +113,11 @@ export function evaluateLCGQuality(params: LCGParams): LCGQuality {
   const period = hullDobellCompliant ? N : isDirectFullCycle ? N : -1;
 
   // For now, spectral quality is a placeholder
-  const spectralQuality = hullDobellCompliant ? 90 : isDirectFullCycle ? 70 : 30;
+  const spectralQuality = hullDobellCompliant
+    ? 90
+    : isDirectFullCycle
+      ? 70
+      : 30;
 
   const multiplierQuality = scoreMultiplier(A, N, hullDobellCompliant);
 
@@ -198,7 +201,7 @@ export function findOptimalLCGParams(N: number): LCGParams {
   // Score and select best parameters
   for (const params of candidates) {
     const quality = evaluateLCGQuality(params);
-    const multiplierScore = scoreMultiplier(
+    const _multiplierScore = scoreMultiplier(
       params.A,
       params.N,
       quality.hullDobellCompliant,

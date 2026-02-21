@@ -2,7 +2,7 @@
 
 import posthog from "posthog-js";
 import { PostHogProvider as PHProvider } from "posthog-js/react";
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnalyticsContext } from "@/contexts/AnalyticsContext";
 import { initPostHog } from "@/infrastructure/analytics/posthog";
 import { ConsentRepository } from "@/infrastructure/repositories/ConsentRepository";

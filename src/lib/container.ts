@@ -6,7 +6,7 @@ import { FileGameRepository } from "../infrastructure/repositories/FileGameRepos
  * Acts as the composition root that wires together all dependencies.
  */
 
-const repository = new FileGameRepository(process.cwd() + "/data");
+const repository = new FileGameRepository(`${process.cwd()}/data`);
 const gameService = new GameService(repository);
 let isInitialized = false;
 
