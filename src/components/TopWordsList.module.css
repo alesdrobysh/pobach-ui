@@ -159,15 +159,16 @@
   cursor: pointer;
 }
 .targetWord:hover {
-  text-decoration: underline;
+  opacity: 0.8;
 }
 .wordLink {
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+  transition: color 0.15s ease;
 }
 .wordLink:hover {
-  text-decoration: underline;
+  color: var(--primary);
 }
 
 @keyframes slideIn {
