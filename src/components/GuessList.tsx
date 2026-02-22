@@ -14,7 +14,7 @@ export default function GuessList({ guesses }: GuessListProps) {
         {guesses.length > 0 && (
           <span className={styles.hint}>
             <BookOpen size={12} />
-            Націскайце на словы для перакладу
+            Націсніце на любое слова, каб адкрыць слоўнік
           </span>
         )}
         <output
