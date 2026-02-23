@@ -20,6 +20,24 @@
   color: var(--text-tertiary);
 }
 
+.hintTextShort {
+  display: none;
+}
+
+.hintTextLong {
+  display: inline;
+}
+
+@media (max-width: 400px) {
+  .hintTextShort {
+    display: inline;
+  }
+
+  .hintTextLong {
+    display: none;
+  }
+}
+
 .list {
   display: flex;
   flex-direction: column;

@@ -14,7 +14,12 @@ export default function GuessList({ guesses }: GuessListProps) {
         {guesses.length > 0 && (
           <span className={styles.hint}>
             <BookOpen size={12} />
-            Націсніце на любое слова, каб адкрыць слоўнік
+            <span className={styles.hintTextShort}>
+              Слоўнік па кліку на слова
+            </span>
+            <span className={styles.hintTextLong}>
+              Націсніце на любое слова для тлумачэння
+            </span>
           </span>
         )}
         <output
