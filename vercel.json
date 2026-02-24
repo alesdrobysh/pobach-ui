@@ -8,10 +8,20 @@
   },
   "functions": {
     "app/api/guess/route.ts": {
-      "includeFiles": "data/**"
+      "includeFiles": "data/**",
+      "maxDuration": 30
     },
     "app/api/hint/route.ts": {
-      "includeFiles": "data/**"
+      "includeFiles": "data/**",
+      "maxDuration": 30
+    },
+    "app/api/target-word/route.ts": {
+      "includeFiles": "data/**",
+      "maxDuration": 30
+    },
+    "app/api/top-words/route.ts": {
+      "includeFiles": "data/**",
+      "maxDuration": 30
     }
   }
 }
