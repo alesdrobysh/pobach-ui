@@ -1,7 +1,8 @@
 import { Analytics } from "@vercel/analytics/next";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import CookieBanner from "@/components/CookieBanner";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { PostHogProvider } from "@/providers/PostHogProvider";
 import "./globals.css";
@@ -16,11 +17,24 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#7c3aed",
+};
+
 // Belarusian metadata (default)
 export const metadata: Metadata = {
   title: "Побач - Беларуская гульня ў словы",
   description:
     "Адгадайце сакрэтнае беларускае слова. Штодзённая гульня ў словы.",
+  manifest: "/site.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Побач",
+  },
 
   openGraph: {
     title: "Побач - Беларуская гульня ў словы",
@@ -84,6 +98,7 @@ export default function RootLayout({
           <ThemeProvider>{children}</ThemeProvider>
           <CookieBanner />
         </PostHogProvider>
+        <ServiceWorkerRegistration />
         <Analytics />
       </body>
     </html>
