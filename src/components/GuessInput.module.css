@@ -16,10 +16,21 @@
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-md);
   transition: all 0.2s ease;
+  min-height: 1em;
+  outline: none;
+  box-sizing: border-box;
+  word-break: break-all;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
-.input::placeholder {
+.input:empty::before {
+  content: "Увядзіце слова...";
   color: var(--text-tertiary);
+}
+
+.input.gameOver:empty::before {
+  content: "Гульня завершана!";
 }
 
 .input:focus {
@@ -29,6 +40,11 @@
 }
 
 .input.loading {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.input.disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
