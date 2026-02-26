@@ -1,11 +1,14 @@
 "use client";
 
+import { Flame } from "lucide-react";
+import Link from "next/link";
 import type { Guess } from "@/core/entities/game";
-import { getCurrentDayIndex } from "@/lib/storage";
+import { getCurrentDayIndex, getStats } from "@/lib/storage";
 import {
   pluralize,
   pluralizeHintsAccusative,
   pluralizeHintsInstrumental,
+  pluralizeStreak,
 } from "@/lib/utils";
 import CountdownTimer from "./CountdownTimer";
 import DictionaryLink from "./DictionaryLink";
@@ -30,6 +33,7 @@ export default function FinishCard({
 }: FinishCardProps) {
   const attempts = guesses.length;
   const hintsCount = guesses.filter((g) => g.isHint).length;
+  const streak = mode === "win" ? getStats().currentStreak : 0;
 
   // Check if new day is available
   const currentDayIndex = getCurrentDayIndex();
@@ -67,6 +71,15 @@ export default function FinishCard({
       <div className={styles.shareSection}>
         <ShareButton dayIndex={dayIndex} guesses={guesses} won={isWin} />
       </div>
+
+      {streak > 0 && (
+        <Link href="/stats" className={styles.streakLink}>
+          <Flame size={20} />
+          <span className={styles.streakCount}>
+            {streak} {pluralizeStreak(streak)}
+          </span>
+        </Link>
+      )}
 
       <div className={styles.nextGameSection}>
         {isNewDayAvailable ? (

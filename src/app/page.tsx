@@ -9,7 +9,6 @@ import GuessInput from "@/components/GuessInput";
 import GuessList from "@/components/GuessList";
 import Header from "@/components/Header";
 import Modal from "@/components/modals/Modal";
-import StatsModal from "@/components/modals/StatsModal";
 import RulesComponent from "@/components/RulesComponent";
 import { useGame } from "@/hooks/useGame";
 import { getCurrentDayIndex } from "@/lib/storage";
@@ -18,7 +17,6 @@ import styles from "./page.module.css";
 export default function Home() {
   const { state, actions } = useGame();
   const [showHelp, setShowHelp] = useState(false);
-  const [showStats, setShowStats] = useState(false);
   const [showGiveUpModal, setShowGiveUpModal] = useState(false);
 
   const handleGiveUp = async () => {
@@ -28,10 +26,7 @@ export default function Home() {
 
   return (
     <main className={styles.container}>
-      <Header
-        onShowHelp={() => setShowHelp(true)}
-        onShowStats={() => setShowStats(true)}
-      />
+      <Header onShowHelp={() => setShowHelp(true)} />
 
       <div className={styles.dayLabel}>дзень {getCurrentDayIndex() + 1}</div>
 
@@ -80,8 +75,6 @@ export default function Home() {
           <RulesComponent />
         </Modal>
       )}
-
-      {showStats && <StatsModal onClose={() => setShowStats(false)} />}
 
       {showGiveUpModal && (
         <GiveUpModal

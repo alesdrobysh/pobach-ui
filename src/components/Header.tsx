@@ -6,10 +6,9 @@ import styles from "./Header.module.css";
 
 type HeaderProps = {
   onShowHelp: () => void;
-  onShowStats: () => void;
 };
 
-export default function Header({ onShowHelp, onShowStats }: HeaderProps) {
+export default function Header({ onShowHelp }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -68,17 +67,14 @@ export default function Header({ onShowHelp, onShowStats }: HeaderProps) {
 
           {menuOpen && (
             <div className={styles.dropdown}>
-              <button
+              <Link
+                href="/stats"
                 className={styles.dropdownItem}
-                onClick={() => {
-                  onShowStats();
-                  setMenuOpen(false);
-                }}
+                onClick={() => setMenuOpen(false)}
                 aria-label="Паказаць статыстыку"
-                type="button"
               >
                 Статыстыка
-              </button>
+              </Link>
 
               <Link
                 href="/about"

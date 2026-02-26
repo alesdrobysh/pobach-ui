@@ -11,8 +11,12 @@ export default function AboutPage() {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <Link href="/" className={styles.backButton}>
-          ← Вярнуцца да гульні
+        <Link
+          href="/"
+          className={styles.backButton}
+          aria-label="Вярнуцца да гульні"
+        >
+          ←<span className={styles.backButtonText}> Назад</span>
         </Link>
         <h1>Пра Побач</h1>
         <button

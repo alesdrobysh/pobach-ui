@@ -1,5 +1,4 @@
 import type { GameStats, HistoryRecord } from "@/core/entities/game";
-import { EPOCH_DATE } from "@/lib/config";
 import { getCurrentDayIndex } from "@/lib/storage";
 
 export function calculateStats(history: HistoryRecord[]): GameStats {
@@ -56,6 +55,7 @@ export function calculateStreaks(history: HistoryRecord[]): {
       maxStreak = Math.max(maxStreak, tempStreak);
     } else if (game.won) {
       tempStreak = 1;
+      maxStreak = Math.max(maxStreak, tempStreak);
     } else {
       tempStreak = 0;
     }
@@ -77,16 +77,18 @@ export function calculateDistribution(
   return distribution;
 }
 
+function pluralizeDays(count: number): string {
+  if (count % 10 === 1 && count % 100 !== 11) return "дзень";
+  if ([2, 3, 4].includes(count % 10) && ![12, 13, 14].includes(count % 100))
+    return "дні";
+  return "дзён";
+}
+
 export function formatRelativeDate(dayIndex: number): string {
   const today = getCurrentDayIndex();
   const diff = today - dayIndex;
 
   if (diff === 0) return "Сёння";
   if (diff === 1) return "Учора";
-  if (diff <= 7) return `${diff} дні таму`;
-
-  // Convert dayIndex to actual date using the same epoch as game-engine
-  const epoch = new Date(EPOCH_DATE);
-  const date = new Date(epoch.getTime() + dayIndex * 24 * 60 * 60 * 1000);
-  return date.toLocaleDateString("be-BY", { month: "short", day: "numeric" });
+  return `${diff} ${pluralizeDays(diff)} таму`;
 }
