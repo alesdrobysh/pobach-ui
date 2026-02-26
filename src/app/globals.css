@@ -57,6 +57,11 @@
     0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
   --shadow-xl:
     0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+
+  /* Aurora effect colors for light mode */
+  --aurora-1: rgba(196, 181, 253, 0.3); /* Pale purple */
+  --aurora-2: rgba(251, 207, 232, 0.25); /* Soft pink */
+  --aurora-3: rgba(186, 230, 253, 0.25); /* Light blue */
 }
 
 :root[data-theme="dark"] {
@@ -118,12 +123,32 @@
     0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
   --shadow-xl:
     0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.35);
+  /* Aurora effect colors for dark mode */
+  --aurora-1: rgba(76, 29, 149, 0.25); /* Deep violet */
+  --aurora-2: rgba(49, 46, 129, 0.3); /* Indigo */
+  --aurora-3: rgba(30, 58, 95, 0.2); /* Muted navy */
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+}
+
+@keyframes aurora-float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(10px, -10px) scale(1.05);
+  }
+  50% {
+    transform: translate(-15px, 15px) scale(0.95);
+  }
+  75% {
+    transform: translate(20px, -20px) scale(1.02);
+  }
 }
 
 html,

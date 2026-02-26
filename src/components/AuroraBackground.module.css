@@ -1,0 +1,66 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: aurora-float 20s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+.blob:nth-child(1) {
+  width: 60vw;
+  height: 60vh;
+  top: -10%;
+  left: -10%;
+  background: var(--aurora-1);
+  animation-delay: 0s;
+}
+
+.blob:nth-child(2) {
+  width: 50vw;
+  height: 50vh;
+  bottom: -15%;
+  right: -5%;
+  background: var(--aurora-2);
+  animation-delay: -5s;
+}
+
+.blob:nth-child(3) {
+  width: 40vw;
+  height: 40vh;
+  top: 50%;
+  right: 20%;
+  background: var(--aurora-3);
+  animation-delay: -10s;
+}
+
+@media (max-width: 768px) {
+  .blob {
+    filter: blur(70px);
+  }
+
+  .blob:nth-child(1) {
+    width: 80vw;
+    height: 80vh;
+  }
+
+  .blob:nth-child(2) {
+    width: 70vw;
+    height: 70vh;
+  }
+
+  .blob:nth-child(3) {
+    width: 60vw;
+    height: 60vh;
+  }
+}

@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import AuroraBackground from "@/components/AuroraBackground";
 import CookieBanner from "@/components/CookieBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -95,7 +96,10 @@ export default function RootLayout({
     <html lang="be" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <PostHogProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <AuroraBackground />
+            {children}
+          </ThemeProvider>
           <CookieBanner />
         </PostHogProvider>
         <ServiceWorkerRegistration />
