@@ -7,8 +7,8 @@ import GiveUpModal from "@/components/GiveUpModal";
 import GuessCard from "@/components/GuessCard";
 import GuessInput from "@/components/GuessInput";
 import GuessList from "@/components/GuessList";
-import Header from "@/components/Header";
 import Modal from "@/components/modals/Modal";
+import PageHeader from "@/components/PageHeader";
 import RulesComponent from "@/components/RulesComponent";
 import { useGame } from "@/hooks/useGame";
 import { getCurrentDayIndex } from "@/lib/storage";
@@ -26,7 +26,7 @@ export default function Home() {
 
   return (
     <main className={styles.container}>
-      <Header onShowHelp={() => setShowHelp(true)} />
+      <PageHeader variant="main" onShowHelp={() => setShowHelp(true)} />
 
       <div className={styles.dayLabel}>дзень {getCurrentDayIndex() + 1}</div>
 

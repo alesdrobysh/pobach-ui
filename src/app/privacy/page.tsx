@@ -1,33 +1,13 @@
 "use client";
 
-import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
-import BackHeaderButton from "@/components/BackHeaderButton";
-import { useTheme } from "@/contexts/ThemeContext";
+import PageHeader from "@/components/PageHeader";
 import styles from "./page.module.css";
 
 export default function PrivacyPage() {
-  const { theme, toggleTheme } = useTheme();
-
   return (
     <main className={styles.container}>
-      <header className={styles.header}>
-        <BackHeaderButton href="/" />
-        <h1>Прыватнасць</h1>
-        <button
-          type="button"
-          className={styles.themeToggle}
-          onClick={toggleTheme}
-          aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
-          title={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
-        >
-          {theme === "light" ? (
-            <Moon size={18} />
-          ) : (
-            <Sun size={18} color="white" />
-          )}
-        </button>
-      </header>
+      <PageHeader variant="secondary" title="Прыватнасць" />
 
       <section className={styles.section}>
         <h2>Збор дадзеных</h2>
