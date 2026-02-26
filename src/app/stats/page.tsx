@@ -1,9 +1,10 @@
 "use client";
 
-import { Check, Share2, X } from "lucide-react";
+import { Check, Moon, Share2, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import BackHeaderButton from "@/components/BackHeaderButton";
+import { useTheme } from "@/contexts/ThemeContext";
 import type { HistoryRecord } from "@/core/entities/game";
 import { formatRelativeDate } from "@/lib/stats";
 import { getCurrentDayIndex, getHistory, getStats } from "@/lib/storage";
@@ -204,12 +205,26 @@ export default function StatsPage() {
     setIsSharing(false);
   };
 
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <main className={styles.container}>
       <header className={styles.header}>
         <BackHeaderButton href="/" label="← Назад" />
-        <h1>СТАТЫСТЫКА</h1>
-        <div className={styles.headerSpacer} />
+        <h1>Статыстыка</h1>
+        <button
+          className={styles.themeToggle}
+          onClick={toggleTheme}
+          aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
+          title={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
+          type="button"
+        >
+          {theme === "light" ? (
+            <Moon size={18} />
+          ) : (
+            <Sun size={18} color="white" />
+          )}
+        </button>
       </header>
 
       <div className={styles.content}>
