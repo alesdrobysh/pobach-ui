@@ -34,6 +34,42 @@ export default function Header({ onShowHelp }: HeaderProps) {
 
   return (
     <header className={styles.header}>
+      <div className={styles.dropdownContainer} ref={dropdownRef}>
+        <button
+          type="button"
+          className={`${styles.hamburgerButton} ${menuOpen ? styles.hamburgerOpen : ""}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Закрыць меню" : "Адкрыць меню"}
+          aria-expanded={menuOpen}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        {menuOpen && (
+          <div className={styles.dropdown}>
+            <Link
+              href="/stats"
+              className={styles.dropdownItem}
+              onClick={() => setMenuOpen(false)}
+              aria-label="Паказаць статыстыку"
+            >
+              Статыстыка
+            </Link>
+
+            <Link
+              href="/about"
+              className={styles.dropdownItem}
+              onClick={() => setMenuOpen(false)}
+              aria-label="Паказаць інфармацыю пра праект"
+            >
+              Пра праект
+            </Link>
+          </div>
+        )}
+      </div>
+
       <button
         className={styles.title}
         onClick={() => window.location.reload()}
@@ -42,7 +78,8 @@ export default function Header({ onShowHelp }: HeaderProps) {
       >
         ПОБАЧ
       </button>
-      <div className={styles.menu}>
+
+      <div className={styles.rightActions}>
         <button
           className={styles.menuButton}
           onClick={onShowHelp}
@@ -51,42 +88,6 @@ export default function Header({ onShowHelp }: HeaderProps) {
         >
           Як гуляць?
         </button>
-
-        <div className={styles.dropdownContainer} ref={dropdownRef}>
-          <button
-            type="button"
-            className={`${styles.hamburgerButton} ${menuOpen ? styles.hamburgerOpen : ""}`}
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? "Закрыць меню" : "Адкрыць меню"}
-            aria-expanded={menuOpen}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-
-          {menuOpen && (
-            <div className={styles.dropdown}>
-              <Link
-                href="/stats"
-                className={styles.dropdownItem}
-                onClick={() => setMenuOpen(false)}
-                aria-label="Паказаць статыстыку"
-              >
-                Статыстыка
-              </Link>
-
-              <Link
-                href="/about"
-                className={styles.dropdownItem}
-                onClick={() => setMenuOpen(false)}
-                aria-label="Паказаць інфармацыю пра праект"
-              >
-                Пра праект
-              </Link>
-            </div>
-          )}
-        </div>
 
         <button
           className={styles.themeToggle}

@@ -58,25 +58,28 @@ export default function GuessInput({
 
   return (
     <div className={styles.inputWrapper}>
-      {/* biome-ignore lint/a11y/useSemanticElements: contenteditable div used intentionally to suppress Chrome Android autofill bar */}
-      <div
-        ref={divRef}
-        contentEditable={!isDisabled}
-        className={`${styles.input} ${loading ? styles.loading : ""} ${isDisabled ? styles.disabled : ""} ${gameOver && !won ? styles.gameOver : ""}`}
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        onPaste={handlePaste}
-        role="textbox"
-        aria-label="Увядзіце слова для здагадкі"
-        aria-describedby={error ? "error-message" : undefined}
-        tabIndex={0}
-        spellCheck={false}
-        autoCorrect="off"
-        autoCapitalize="none"
-        inputMode="text"
-        enterKeyHint="send"
-        suppressContentEditableWarning
-      />
+      <div className={styles.inputRow}>
+        {/* biome-ignore lint/a11y/useSemanticElements: contenteditable div used intentionally to suppress Chrome Android autofill bar */}
+        <div
+          ref={divRef}
+          contentEditable={!isDisabled}
+          className={`${styles.input} ${loading ? styles.loading : ""} ${isDisabled ? styles.disabled : ""} ${gameOver && !won ? styles.gameOver : ""}`}
+          onInput={handleInput}
+          onKeyDown={handleKeyDown}
+          onPaste={handlePaste}
+          role="textbox"
+          aria-label="Увядзіце слова для здагадкі"
+          aria-describedby={error ? "error-message" : undefined}
+          tabIndex={0}
+          spellCheck={false}
+          autoCorrect="off"
+          autoCapitalize="none"
+          inputMode="text"
+          enterKeyHint="send"
+          suppressContentEditableWarning
+        />
+      </div>
+
       {error && (
         <div className={styles.error} id="error-message" role="alert">
           {errorWord && (

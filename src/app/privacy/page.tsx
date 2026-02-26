@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
+import BackHeaderButton from "@/components/BackHeaderButton";
 import { useTheme } from "@/contexts/ThemeContext";
 import styles from "./page.module.css";
 
@@ -11,9 +12,7 @@ export default function PrivacyPage() {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <Link href="/" className={styles.backButton}>
-          ← Вярнуцца да гульні
-        </Link>
+        <BackHeaderButton href="/" />
         <h1>Прыватнасць</h1>
         <button
           type="button"

@@ -1,4 +1,16 @@
 /**
+ * Returns badge type and closeness label for a given rank
+ */
+export function getRankBadgeInfo(rank: number): {
+  type: "hot" | "warm" | "cold";
+  label: string;
+} {
+  if (rank <= 10) return { type: "hot", label: "вельмі блізка" };
+  if (rank <= 500) return { type: "warm", label: "цёпла" };
+  return { type: "cold", label: "халодна" };
+}
+
+/**
  * Returns the CSS color variable for a given rank
  */
 export function getRankColor(rank: number): string {

@@ -3,6 +3,7 @@
 import { Check, Share2, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import BackHeaderButton from "@/components/BackHeaderButton";
 import type { HistoryRecord } from "@/core/entities/game";
 import { formatRelativeDate } from "@/lib/stats";
 import { getCurrentDayIndex, getHistory, getStats } from "@/lib/storage";
@@ -124,12 +125,10 @@ function HistoryItem({ game }: HistoryItemProps) {
 
   return (
     <div className={styles.historyItem}>
-      <div className={styles.historyIcon}>
-        {game.won ? (
-          <Check className={styles.winIcon} size={18} />
-        ) : (
-          <X className={styles.lossIcon} size={18} />
-        )}
+      <div
+        className={`${styles.historyIconCircle} ${game.won ? styles.historyIconWin : styles.historyIconLoss}`}
+      >
+        {game.won ? <Check size={16} /> : <X size={16} />}
       </div>
       <div className={styles.historyWord}>{displayWord}</div>
       <div className={styles.historyMeta}>
@@ -208,23 +207,17 @@ export default function StatsPage() {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <Link
-          href="/"
-          className={styles.backButton}
-          aria-label="Вярнуцца да гульні"
-        >
-          ←<span className={styles.backButtonText}> Назад</span>
-        </Link>
-        <h1>Статыстыка</h1>
+        <BackHeaderButton href="/" label="← Назад" />
+        <h1>СТАТЫСТЫКА</h1>
         <div className={styles.headerSpacer} />
       </header>
 
       <div className={styles.content}>
         <div className={styles.statsGrid}>
-          <StatCard label="Гульняў" value={stats.gamesPlayed} />
-          <StatCard label="% Перамог" value={winRate} />
-          <StatCard label="Серыя" value={stats.currentStreak} />
-          <StatCard label="Макс. серыя" value={stats.maxStreak} />
+          <StatCard label="ГУЛЬНЯЎ" value={stats.gamesPlayed} />
+          <StatCard label="% ПЕРАМОГ" value={winRate} />
+          <StatCard label="СЕРЫЯ" value={stats.currentStreak} />
+          <StatCard label="МАКС. СЕРЫЯ" value={stats.maxStreak} />
         </div>
 
         <SectionTitle>Размеркаванне спроб</SectionTitle>
@@ -253,7 +246,7 @@ export default function StatsPage() {
           disabled={isSharing}
         >
           <Share2 size={18} />
-          Падзяліцца
+          ПАДЗЯЛІЦЦА
         </button>
       </div>
 

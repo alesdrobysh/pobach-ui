@@ -45,6 +45,7 @@
   cursor: pointer;
   transition: color 0.15s ease;
 }
+
 .word:hover {
   color: var(--primary);
 }

@@ -5,12 +5,12 @@
   --primary-light: #ede9fe;
   --primary-gradient: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
 
-  /* Background colors - soft and warm */
-  --bg-primary: #fdfcfb;
-  --bg-secondary: #f8f7ff;
+  /* Background colors - cool gray-blue */
+  --bg-primary: #eef0f5;
+  --bg-secondary: #eef0f5;
   --bg-tertiary: #ffffff;
   --bg-card: #ffffff;
-  --bg-card-hover: #faf9fe;
+  --bg-card-hover: #f5f6fa;
   --bg-input: rgba(255, 255, 255, 0.95);
   --bg-modal-overlay: rgba(0, 0, 0, 0.3);
 
@@ -41,17 +41,22 @@
   --rank-1000: #f59e0b;
   --rank-default: #93c5fd;
 
-  /* Shadows - soft and elevated */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  /* Rank badge tokens */
+  --rank-badge-hot-bg: #d1fae5;
+  --rank-badge-hot: #10b981;
+  --rank-badge-warm-bg: #fef3c7;
+  --rank-badge-warm: #f59e0b;
+  --rank-badge-cold-bg: #dbeafe;
+  --rank-badge-cold: #3b82f6;
+
+  /* Shadows - neutral, no purple tint */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.08);
   --shadow-md:
-    0 4px 6px -1px rgba(124, 58, 237, 0.1),
-    0 2px 4px -2px rgba(124, 58, 237, 0.1);
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
   --shadow-lg:
-    0 10px 15px -3px rgba(124, 58, 237, 0.15),
-    0 4px 6px -4px rgba(124, 58, 237, 0.1);
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
   --shadow-xl:
-    0 20px 25px -5px rgba(124, 58, 237, 0.2),
-    0 8px 10px -6px rgba(124, 58, 237, 0.1);
+    0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
 }
 
 :root[data-theme="dark"] {
@@ -61,11 +66,11 @@
   --primary-light: #312e81;
   --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #c4b5fd 100%);
 
-  /* Background colors - deep purples for relaxation */
-  --bg-primary: #0f0a1e;
-  --bg-secondary: #1a1333;
+  /* Background colors - deep dark */
+  --bg-primary: #0d0d1a;
+  --bg-secondary: #0d0d1a;
   --bg-tertiary: #251d3d;
-  --bg-card: #1f1a33;
+  --bg-card: #1a1535;
   --bg-card-hover: #2a2447;
   --bg-input: rgba(37, 29, 61, 0.95);
   --bg-modal-overlay: rgba(0, 0, 0, 0.6);
@@ -97,17 +102,22 @@
   --rank-1000: #fbbf24;
   --rank-default: #60a5fa;
 
-  /* Shadows - darker with subtle glow */
+  /* Rank badge tokens */
+  --rank-badge-hot-bg: #064e3b;
+  --rank-badge-hot: #34d399;
+  --rank-badge-warm-bg: #78350f;
+  --rank-badge-warm: #fbbf24;
+  --rank-badge-cold-bg: #1e3a5f;
+  --rank-badge-cold: #60a5fa;
+
+  /* Shadows - darker */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow-md:
-    0 4px 6px -1px rgba(139, 92, 246, 0.2),
-    0 2px 4px -2px rgba(139, 92, 246, 0.15);
+    0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
   --shadow-lg:
-    0 10px 15px -3px rgba(139, 92, 246, 0.25),
-    0 4px 6px -4px rgba(139, 92, 246, 0.2);
+    0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
   --shadow-xl:
-    0 20px 25px -5px rgba(139, 92, 246, 0.3),
-    0 8px 10px -6px rgba(139, 92, 246, 0.25);
+    0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.35);
 }
 
 * {

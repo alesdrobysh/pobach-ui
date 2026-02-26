@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
+import BackHeaderButton from "@/components/BackHeaderButton";
 import { useTheme } from "@/contexts/ThemeContext";
 import styles from "./page.module.css";
 
@@ -11,14 +12,8 @@ export default function AboutPage() {
   return (
     <main className={styles.container}>
       <header className={styles.header}>
-        <Link
-          href="/"
-          className={styles.backButton}
-          aria-label="Вярнуцца да гульні"
-        >
-          ←<span className={styles.backButtonText}> Назад</span>
-        </Link>
-        <h1>Пра Побач</h1>
+        <BackHeaderButton href="/" label="← Назад" />
+        <h1>Пра гульню</h1>
         <button
           type="button"
           className={styles.themeToggle}
