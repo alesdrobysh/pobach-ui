@@ -202,13 +202,26 @@ export function useGame(): UseGameReturn {
             setDayIndex(data.dayIndex);
           }
 
-          const newGuess = { word: wordToGuess, rank: data.rank };
-          setLastGuess(newGuess);
+          const newGuess = { word: data.word, rank: data.rank };
 
-          trackGuess(wordToGuess, data.rank, data.similarity ?? 0);
+          trackGuess(data.word, data.rank, data.similarity ?? 0);
 
           const currentGuesses =
             dayIndex !== null && data.dayIndex !== dayIndex ? [] : guesses;
+
+          if (currentGuesses.some((g) => g.word === data.word)) {
+            vibrate("short");
+            setErrorWord(data.word);
+            setError("вы ўжо ўводзілі гэтае слова");
+            setTimeout(() => {
+              setError(null);
+              setErrorWord(null);
+            }, 2000);
+            setInput("");
+            return;
+          }
+
+          setLastGuess(newGuess);
 
           if (currentGuesses.length === 0) {
             trackGameStart();

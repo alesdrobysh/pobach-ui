@@ -1,5 +1,6 @@
 import { EPOCH_DATE } from "../../lib/config";
 import { findOptimalLCGParams, type LCGParams } from "../../lib/lcg-optimizer";
+import { lemmatize } from "../../lib/lemmatizer";
 import { type PoolData, PoolingService } from "../../lib/pooling-service";
 import type { GameState, GuessResult, TopWord } from "../entities/game";
 import type { IGameRepository } from "../interfaces/IGameRepository";
@@ -245,7 +246,8 @@ export class GameService {
 
   public makeGuess(word: string, dayIndex?: number): GuessResult {
     this.ensureInitialized();
-    const cleanWord = this.normalizeWord(word);
+    const normalized = this.normalizeWord(word);
+    const cleanWord = lemmatize(normalized);
 
     // Use provided dayIndex or fallback to current day
     const dayIndexParam = dayIndex ?? this.getDailySecret().dayIndex;
