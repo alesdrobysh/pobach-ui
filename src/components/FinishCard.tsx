@@ -72,13 +72,20 @@ export default function FinishCard({
         <ShareButton dayIndex={dayIndex} guesses={guesses} won={isWin} />
       </div>
 
-      {streak > 0 && (
-        <Link href="/stats" className={styles.streakLink}>
-          <Flame size={20} />
-          <span className={styles.streakCount}>
-            {streak} {pluralizeStreak(streak)}
-          </span>
-        </Link>
+      {isWin && (
+        <div className={styles.streakSection}>
+          {streak > 0 && (
+            <Link href="/stats" className={styles.streakLink}>
+              <Flame size={20} />
+              <span className={styles.streakCount}>
+                {streak} {pluralizeStreak(streak)}
+              </span>
+            </Link>
+          )}
+          <Link href="/stats" className={styles.seeStatsLink}>
+            Паглядзець статыстыку
+          </Link>
+        </div>
       )}
 
       <div className={styles.nextGameSection}>

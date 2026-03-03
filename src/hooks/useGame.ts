@@ -237,9 +237,13 @@ export function useGame(): UseGameReturn {
             setGameOver(true);
             triggerConfetti();
             trackWin(newGuesses.length);
-            if (dayIndex !== null) {
-              saveGameResult(dayIndex, true, newGuesses.length, 1, newGuesses);
-            }
+            saveGameResult(
+              data.dayIndex,
+              true,
+              newGuesses.length,
+              1,
+              newGuesses,
+            );
           }
           setInput("");
         } else {
@@ -342,9 +346,7 @@ export function useGame(): UseGameReturn {
         setGameOver(true);
         triggerConfetti();
         trackWin(newGuesses.length);
-        if (dayIndex !== null) {
-          saveGameResult(dayIndex, true, newGuesses.length, 1, newGuesses);
-        }
+        saveGameResult(data.dayIndex, true, newGuesses.length, 1, newGuesses);
       }
     } catch (e) {
       console.error("Hint error:", e);
