@@ -12,7 +12,6 @@ import {
 } from "@/lib/utils";
 import CountdownTimer from "./CountdownTimer";
 import DictionaryLink from "./DictionaryLink";
-import styles from "./FinishCard.module.css";
 import ShareButton from "./ShareButton";
 import TopWordsList from "./TopWordsList";
 
@@ -43,63 +42,51 @@ export default function FinishCard({
   const isWin = mode === "win";
 
   return (
-    <div
-      className={`${styles.finishCard} ${isWin ? styles.finishCardWin : styles.finishCardLose}`}
-      data-testid="finish-card"
-    >
-      <div className={styles.finishMessage}>
-        {isWin && <span className={styles.finishEmoji}>🎉</span>}
+    <div data-testid="finish-card">
+      <div>
+        {isWin && <span>🎉</span>}
         <h2>{isWin ? "Віншуем!" : "Таямніца раскрыта!"}</h2>
-        <p className={styles.finishStats}>
+        <p>
           {isWin
             ? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` (з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)})` : ""}! Заўтра будзе новае слова — заходзьце праверыць веды!`
             : `Таямніца раскрыта! 🔓 Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""} Заўтра будзе новае слова — заходзьце праверыць веды!`}
         </p>
         {!isWin && targetWord && (
-          <p className={styles.targetWord}>
+          <p>
             Правільнае слова:{" "}
             <strong>
-              <DictionaryLink
-                word={targetWord}
-                className={styles.targetWordLink}
-              />
+              <DictionaryLink word={targetWord} />
             </strong>
           </p>
         )}
       </div>
 
-      <div className={styles.shareSection}>
+      <div>
         <ShareButton dayIndex={dayIndex} guesses={guesses} won={isWin} />
       </div>
 
       {isWin && (
-        <div className={styles.streakSection}>
+        <div>
           {streak > 0 && (
-            <Link href="/stats" className={styles.streakLink}>
+            <Link href="/stats">
               <Flame size={20} />
-              <span className={styles.streakCount}>
+              <span>
                 {streak} {pluralizeStreak(streak)}
               </span>
             </Link>
           )}
-          <Link href="/stats" className={styles.seeStatsLink}>
-            Паглядзець статыстыку
-          </Link>
+          <Link href="/stats">Паглядзець статыстыку</Link>
         </div>
       )}
 
-      <div className={styles.nextGameSection}>
+      <div>
         {isNewDayAvailable ? (
-          <button
-            className={styles.newGameButton}
-            onClick={() => window.location.reload()}
-            type="button"
-          >
+          <button onClick={() => window.location.reload()} type="button">
             Даступна новае слова! Грай зараз
           </button>
         ) : (
           <>
-            <span className={styles.nextGameLabel}>Наступнае слова праз:</span>
+            <span>Наступнае слова праз:</span>
             <CountdownTimer />
           </>
         )}

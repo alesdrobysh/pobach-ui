@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
-import styles from "./page.module.css";
 
 export default function AboutPage() {
   return (
-    <main className={styles.container}>
+    <main>
       <PageHeader variant="secondary" title="Пра гульню" />
 
-      <section className={styles.section}>
+      <section>
         <h2>Як гэта працуе?</h2>
         <p>
           Побач выкарыстоўвае алгарытмы машыннага навучання для вызначэння
@@ -18,7 +17,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section>
         <h2>Стваральнік</h2>
         <p>Зроблена з ❤️ да роднай мовы</p>
         <p>
@@ -72,7 +71,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className={styles.section}>
+      <section>
         <h2>Кантакт</h2>
         <p>
           Маеце пытанні або прапановы? Напішыце нам па пошце{" "}
@@ -80,7 +79,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <footer className={styles.footer}>
+      <footer>
         <Link href="/">← Вярнуцца да гульні</Link> ·{" "}
         <Link href="/privacy">Прыватнасць</Link>
       </footer>

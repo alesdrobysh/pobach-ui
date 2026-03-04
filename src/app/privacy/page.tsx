@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import PageHeader from "@/components/PageHeader";
-import styles from "./page.module.css";
 
 export default function PrivacyPage() {
   return (
-    <main className={styles.container}>
+    <main>
       <PageHeader variant="secondary" title="Прыватнасць" />
 
-      <section className={styles.section}>
+      <section>
         <h2>Збор дадзеных</h2>
         <p>
           Мы збіраем толькі мінімальныя дадзеныя, неабходныя для працы гульні:
@@ -24,7 +23,7 @@ export default function PrivacyPage() {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section>
         <h2>Мэта выкарыстання</h2>
         <p>Дадзеныя выкарыстоўваюцца выключна для:</p>
         <ul>
@@ -35,7 +34,7 @@ export default function PrivacyPage() {
         </ul>
       </section>
 
-      <section className={styles.section}>
+      <section>
         <h2>Аналітыка</h2>
         <p>
           Мы выкарыстоўваем Vercel Analytics для збору агульнай статыстыкі
@@ -53,7 +52,7 @@ export default function PrivacyPage() {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section>
         <h2>Доступ да дадзеных</h2>
         <p>
           Вашы дадзеныя не перадаюцца трэцім асобам. Мы не выкарыстоўваем
@@ -65,7 +64,7 @@ export default function PrivacyPage() {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section>
         <h2>Захаванне дадзеных</h2>
         <p>
           Дадзеныя захоўваюцца ананімна без IP-адрасоў або іншай ідэнтыфікуючай
@@ -83,7 +82,7 @@ export default function PrivacyPage() {
         </p>
       </section>
 
-      <section className={styles.section}>
+      <section>
         <h2>Кантакт</h2>
         <p>
           Калі ў вас ёсць пытанні пра прыватнасць або вы хочаце выдаліць свае
@@ -92,7 +91,7 @@ export default function PrivacyPage() {
         </p>
       </section>
 
-      <footer className={styles.footer}>
+      <footer>
         <Link href="/">← Вярнуцца да гульні</Link> ·{" "}
         <Link href="/about">Пра праект</Link>
       </footer>

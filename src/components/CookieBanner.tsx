@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useAnalytics } from "@/contexts/AnalyticsContext";
-import styles from "./CookieBanner.module.css";
 
 export default function CookieBanner() {
   const { hasConsented, giveConsent } = useAnalytics();
@@ -28,15 +27,13 @@ export default function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <div
-      className={`${styles.banner} ${isAnimating ? styles.show : styles.hide}`}
-    >
-      <div className={styles.content}>
-        <p className={styles.text}>
+    <div>
+      <div>
+        <p>
           Мы выкарыстоўваем cookies, каб захоўваць ваш прагрэс і аналізаваць
           статыстыку гульні.
         </p>
-        <button className={styles.button} onClick={handleAccept} type="button">
+        <button onClick={handleAccept} type="button">
           Зразумела
         </button>
       </div>

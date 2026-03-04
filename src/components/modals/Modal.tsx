@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react";
 import { useEffect } from "react";
-import styles from "./Modal.module.css";
 
 type ModalProps = {
   children: ReactNode;
@@ -24,7 +23,6 @@ export default function Modal({ children, onClose, title }: ModalProps) {
 
   return (
     <div
-      className={styles.modalOverlay}
       onClick={onClose}
       onKeyDown={(e) => {
         if (e.key === "Escape") onClose();
@@ -34,23 +32,14 @@ export default function Modal({ children, onClose, title }: ModalProps) {
       aria-labelledby="modal-title"
     >
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only prevents overlay close */}
-      <div
-        className={styles.modal}
-        role="document"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className={styles.modalHeader}>
+      <div role="document" onClick={(e) => e.stopPropagation()}>
+        <div>
           <h2 id="modal-title">{title}</h2>
-          <button
-            onClick={onClose}
-            aria-label="Закрыць"
-            className={styles.closeButton}
-            type="button"
-          >
+          <button onClick={onClose} aria-label="Закрыць" type="button">
             ×
           </button>
         </div>
-        <div className={styles.modalContent}>{children}</div>
+        <div>{children}</div>
       </div>
     </div>
   );

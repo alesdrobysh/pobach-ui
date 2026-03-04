@@ -12,7 +12,6 @@ import PageHeader from "@/components/PageHeader";
 import RulesComponent from "@/components/RulesComponent";
 import { useGame } from "@/hooks/useGame";
 import { getCurrentDayIndex } from "@/lib/storage";
-import styles from "./page.module.css";
 
 export default function Home() {
   const { state, actions } = useGame();
@@ -25,10 +24,10 @@ export default function Home() {
   };
 
   return (
-    <main className={styles.container}>
+    <main>
       <PageHeader variant="main" onShowHelp={() => setShowHelp(true)} />
 
-      <div className={styles.dayLabel}>дзень {getCurrentDayIndex() + 1}</div>
+      <div>дзень {getCurrentDayIndex() + 1}</div>
 
       <GuessInput
         input={state.input}
@@ -54,15 +53,15 @@ export default function Home() {
         />
       ) : (
         state.lastGuess && (
-          <output className={styles.lastGuessContainer} aria-live="polite">
-            <div className={styles.lastGuessLabel}>Апошняе слова:</div>
+          <output aria-live="polite">
+            <div>Апошняе слова:</div>
             <GuessCard guess={state.lastGuess} />
           </output>
         )
       )}
 
       {state.guesses.length === 0 ? (
-        <div className={styles.emptyState}>
+        <div>
           <h2>Вітаем у «Побач»!</h2>
           <RulesComponent />
         </div>
@@ -83,7 +82,7 @@ export default function Home() {
         />
       )}
 
-      <footer className={styles.footer}>
+      <footer>
         Зроблена з ❤️ да роднай мовы
         <br />
         <Link href="/about">Пра праект</Link> ·{" "}

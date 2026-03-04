@@ -1,5 +1,3 @@
-import styles from "./RulesComponent.module.css";
-
 export default function RulesComponent() {
   return (
     <>
@@ -10,7 +8,7 @@ export default function RulesComponent() {
         Напрыклад, загадана слова: <b>ЛЕС</b>
       </p>
 
-      <ul className={styles.rulesList}>
+      <ul>
         <li>
           <span>🟩 </span>
           <span>

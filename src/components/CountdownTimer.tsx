@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import styles from "./CountdownTimer.module.css";
 
 export default function CountdownTimer() {
   const [timeLeft, setTimeLeft] = useState("");
@@ -29,5 +28,5 @@ export default function CountdownTimer() {
     return () => clearInterval(interval);
   }, []);
 
-  return <span className={styles.timer}>{timeLeft}</span>;
+  return <span>{timeLeft}</span>;
 }

@@ -4,7 +4,6 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type { TopWord } from "@/core/entities/game";
 import DictionaryLink from "./DictionaryLink";
-import styles from "./TopWordsList.module.css";
 
 type TopWordsListProps = {
   dayIndex: number;
@@ -52,65 +51,50 @@ export default function TopWordsList({
   };
 
   return (
-    <div className={styles.topWordsSection}>
+    <div>
       <button
-        className={styles.toggleButton}
         onClick={toggleExpanded}
         aria-expanded={isExpanded}
         aria-controls="top-words-list"
         type="button"
       >
         Паказаць бліжэйшыя словы
-        <ChevronDown
-          size={16}
-          className={`${styles.chevron} ${isExpanded ? styles.chevronRotated : ""}`}
-        />
+        <ChevronDown size={16} />
       </button>
 
       {isExpanded && (
-        <div id="top-words-list" className={styles.wordsContainer}>
+        <div id="top-words-list">
           {isLoading && (
-            <div className={styles.skeletonContainer}>
+            <div>
               {Array.from({ length: 10 }, (_, i) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
-                <div key={`skeleton-${i}`} className={styles.skeletonRow}>
-                  <div className={styles.skeletonRank}></div>
-                  <div className={styles.skeletonWord}></div>
+                <div key={`skeleton-${i}`}>
+                  <div></div>
+                  <div></div>
                 </div>
               ))}
             </div>
           )}
 
-          {error && <div className={styles.errorMessage}>{error}</div>}
+          {error && <div>{error}</div>}
 
           {topWords && (
-            <div className={styles.tableContainer}>
-              <table className={styles.wordsTable}>
+            <div>
+              <table>
                 <thead>
                   <tr>
-                    <th className={styles.rankHeader}>Месца</th>
-                    <th className={styles.wordHeader}>Слова</th>
+                    <th>Месца</th>
+                    <th>Слова</th>
                   </tr>
                 </thead>
                 <tbody>
                   {topWords.map((word) => (
                     <tr key={word.rank}>
-                      <td className={styles.rankCell}>
-                        {word.rank === 1 ? (
-                          <span className={styles.rankOne}>{word.rank}</span>
-                        ) : (
-                          word.rank
-                        )}
+                      <td>
+                        {word.rank === 1 ? <span>{word.rank}</span> : word.rank}
                       </td>
-                      <td className={styles.wordCell}>
-                        <DictionaryLink
-                          word={word.word}
-                          className={
-                            word.rank === 1 && targetWord
-                              ? styles.targetWord
-                              : styles.wordLink
-                          }
-                        />
+                      <td>
+                        <DictionaryLink word={word.word} />
                       </td>
                     </tr>
                   ))}

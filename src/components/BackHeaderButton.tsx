@@ -1,5 +1,4 @@
 import Link from "next/link";
-import styles from "./BackHeaderButton.module.css";
 
 type BackHeaderButtonProps = {
   href: string;
@@ -13,7 +12,7 @@ export default function BackHeaderButton({
   ariaLabel = "Вярнуцца да гульні",
 }: BackHeaderButtonProps) {
   return (
-    <Link href={href} className={styles.backButton} aria-label={ariaLabel}>
+    <Link href={href} aria-label={ariaLabel}>
       {label}
     </Link>
   );

@@ -2,7 +2,6 @@ import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
-import styles from "./Header.module.css";
 
 type HeaderProps = {
   onShowHelp: () => void;
@@ -33,11 +32,10 @@ export default function Header({ onShowHelp }: HeaderProps) {
   }, [menuOpen]);
 
   return (
-    <header className={styles.header}>
-      <div className={styles.dropdownContainer} ref={dropdownRef}>
+    <header>
+      <div ref={dropdownRef}>
         <button
           type="button"
-          className={`${styles.hamburgerButton} ${menuOpen ? styles.hamburgerOpen : ""}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label={menuOpen ? "Закрыць меню" : "Адкрыць меню"}
           aria-expanded={menuOpen}
@@ -48,10 +46,9 @@ export default function Header({ onShowHelp }: HeaderProps) {
         </button>
 
         {menuOpen && (
-          <div className={styles.dropdown}>
+          <div>
             <Link
               href="/stats"
-              className={styles.dropdownItem}
               onClick={() => setMenuOpen(false)}
               aria-label="Паказаць статыстыку"
             >
@@ -60,7 +57,6 @@ export default function Header({ onShowHelp }: HeaderProps) {
 
             <Link
               href="/about"
-              className={styles.dropdownItem}
               onClick={() => setMenuOpen(false)}
               aria-label="Паказаць інфармацыю пра праект"
             >
@@ -71,7 +67,6 @@ export default function Header({ onShowHelp }: HeaderProps) {
       </div>
 
       <button
-        className={styles.title}
         onClick={() => window.location.reload()}
         type="button"
         aria-label="Побач - перазагрузіць гульню"
@@ -79,9 +74,8 @@ export default function Header({ onShowHelp }: HeaderProps) {
         ПОБАЧ
       </button>
 
-      <div className={styles.rightActions}>
+      <div>
         <button
-          className={styles.menuButton}
           onClick={onShowHelp}
           aria-label="Паказаць інструкцыі як гуляць"
           type="button"
@@ -90,7 +84,6 @@ export default function Header({ onShowHelp }: HeaderProps) {
         </button>
 
         <button
-          className={styles.themeToggle}
           onClick={toggleTheme}
           aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
           title={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import styles from "./GuessInput.module.css";
 
 type GuessInputProps = {
   input: string;
@@ -57,13 +56,12 @@ export default function GuessInput({
   };
 
   return (
-    <div className={styles.inputWrapper}>
-      <div className={styles.inputRow}>
+    <div>
+      <div>
         {/* biome-ignore lint/a11y/useSemanticElements: contenteditable div used intentionally to suppress Chrome Android autofill bar */}
         <div
           ref={divRef}
           contentEditable={!isDisabled}
-          className={`${styles.input} ${loading ? styles.loading : ""} ${isDisabled ? styles.disabled : ""} ${gameOver && !won ? styles.gameOver : ""}`}
           onInput={handleInput}
           onKeyDown={handleKeyDown}
           onPaste={handlePaste}
@@ -81,7 +79,7 @@ export default function GuessInput({
       </div>
 
       {error && (
-        <div className={styles.error} id="error-message" role="alert">
+        <div id="error-message" role="alert">
           {errorWord && (
             <>
               <strong>«{errorWord}»</strong> —{" "}
@@ -91,10 +89,9 @@ export default function GuessInput({
         </div>
       )}
 
-      <div className={styles.hintContainer}>
+      <div>
         {!won && !gameOver && (
           <button
-            className={styles.hintButton}
             onClick={onHint}
             disabled={loading}
             aria-label="Атрымаць падказку"
@@ -106,7 +103,6 @@ export default function GuessInput({
         )}
         {!won && guessCount >= 10 && !gameOver && (
           <button
-            className={styles.giveUpButton}
             onClick={onGiveUp}
             disabled={loading}
             aria-label="Здацца і завяршыць гульню"

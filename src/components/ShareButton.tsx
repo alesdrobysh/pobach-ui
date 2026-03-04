@@ -5,7 +5,6 @@ import { useState } from "react";
 import type { Guess } from "@/core/entities/game";
 import { EPOCH_DATE } from "@/lib/config";
 import { pluralizeHintsInstrumental } from "@/lib/utils";
-import styles from "./ShareButton.module.css";
 
 type ShareButtonProps = {
   dayIndex: number;
@@ -130,7 +129,6 @@ export default function ShareButton({
   return (
     <>
       <button
-        className={styles.shareButton}
         onClick={onShare}
         disabled={isSharing}
         aria-label="Падзяліцца вынікамі гульні"
@@ -140,11 +138,7 @@ export default function ShareButton({
         Падзяліцца
       </button>
 
-      {showToast && (
-        <div className={styles.toast} aria-live="polite">
-          Скапіравана!
-        </div>
-      )}
+      {showToast && <div aria-live="polite">Скапіравана!</div>}
     </>
   );
 }

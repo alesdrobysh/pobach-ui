@@ -8,7 +8,6 @@ import type { HistoryRecord } from "@/core/entities/game";
 import { formatRelativeDate } from "@/lib/stats";
 import { getCurrentDayIndex, getHistory, getStats } from "@/lib/storage";
 import { pluralize } from "@/lib/utils";
-import styles from "./page.module.css";
 
 type StatCardProps = {
   label: string;
@@ -17,19 +16,19 @@ type StatCardProps = {
 
 function StatCard({ label, value }: StatCardProps) {
   return (
-    <div className={styles.statCard}>
-      <div className={styles.statValue}>{value}</div>
-      <div className={styles.statLabel}>{label}</div>
+    <div>
+      <div>{value}</div>
+      <div>{label}</div>
     </div>
   );
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.sectionTitle}>
-      <div className={styles.sectionLine} />
-      <span className={styles.sectionText}>{children}</span>
-      <div className={styles.sectionLine} />
+    <div>
+      <div />
+      <span>{children}</span>
+      <div />
     </div>
   );
 }
@@ -87,25 +86,24 @@ function DistributionChart({
   const maxCount = Math.max(...rangeCounts.map((r) => r.count), 1);
 
   return (
-    <div className={styles.distributionChart}>
+    <div>
       {rangeCounts.map((range) => {
         const percentage =
           range.count > 0 ? Math.round((range.count / maxCount) * 100) : 0;
-        const isHighlighted =
-          todayAttempts !== undefined &&
-          todayAttempts >= range.min &&
-          todayAttempts <= range.max;
 
         return (
-          <div key={range.label} className={styles.distributionBar}>
-            <div className={styles.barLabel}>{range.label}</div>
-            <div className={styles.barTrack}>
+          <div key={range.label}>
+            <div>{range.label}</div>
+            <div>
               <div
-                className={`${styles.bar} ${isHighlighted ? styles.barHighlighted : ""}`}
                 style={{ width: `${percentage}%` }}
+                role="progressbar"
+                aria-valuenow={percentage}
+                aria-valuemin={0}
+                aria-valuemax={100}
               />
             </div>
-            <div className={styles.barCount}>{range.count}</div>
+            <div>{range.count}</div>
           </div>
         );
       })}
@@ -124,22 +122,16 @@ function HistoryItem({ game }: HistoryItemProps) {
     : `Гульня #${game.dayIndex + 1}`;
 
   return (
-    <div className={styles.historyItem}>
-      <div
-        className={`${styles.historyIconCircle} ${game.won ? styles.historyIconWin : styles.historyIconLoss}`}
-      >
-        {game.won ? <Check size={16} /> : <X size={16} />}
-      </div>
-      <div className={styles.historyWord}>{displayWord}</div>
-      <div className={styles.historyMeta}>
-        <span className={styles.historyAttempts}>
+    <div>
+      <div>{game.won ? <Check size={16} /> : <X size={16} />}</div>
+      <div>{displayWord}</div>
+      <div>
+        <span>
           {game.won
             ? `${game.attempts} ${pluralize(game.attempts)}`
             : "Не адгадана"}
         </span>
-        <span className={styles.historyDate}>
-          {formatRelativeDate(game.dayIndex)}
-        </span>
+        <span>{formatRelativeDate(game.dayIndex)}</span>
       </div>
     </div>
   );
@@ -205,11 +197,11 @@ export default function StatsPage() {
   };
 
   return (
-    <main className={styles.container}>
+    <main>
       <PageHeader variant="secondary" title="Статыстыка" />
 
-      <div className={styles.content}>
-        <div className={styles.statsGrid}>
+      <div>
+        <div>
           <StatCard label="ГУЛЬНЯЎ" value={stats.gamesPlayed} />
           <StatCard label="% ПЕРАМОГ" value={winRate} />
           <StatCard label="СЕРЫЯ" value={stats.currentStreak} />
@@ -223,11 +215,9 @@ export default function StatsPage() {
         />
 
         <SectionTitle>Апошнія гульні</SectionTitle>
-        <div className={styles.historyList}>
+        <div>
           {history.length === 0 ? (
-            <div className={styles.emptyHistory}>
-              Пакуль няма гісторыі гульняў
-            </div>
+            <div>Пакуль няма гісторыі гульняў</div>
           ) : (
             history.map((game) => (
               <HistoryItem key={game.dayIndex} game={game} />
@@ -235,27 +225,18 @@ export default function StatsPage() {
           )}
         </div>
 
-        <button
-          type="button"
-          className={styles.shareButton}
-          onClick={onShareStats}
-          disabled={isSharing}
-        >
+        <button type="button" onClick={onShareStats} disabled={isSharing}>
           <Share2 size={18} />
           ПАДЗЯЛІЦЦА
         </button>
       </div>
 
-      <footer className={styles.footer}>
+      <footer>
         <Link href="/">← Вярнуцца да гульні</Link> ·{" "}
         <Link href="/privacy">Прыватнасць</Link>
       </footer>
 
-      {showToast && (
-        <div className={styles.toast} aria-live="polite">
-          Скапіравана!
-        </div>
-      )}
+      {showToast && <div aria-live="polite">Скапіравана!</div>}
     </main>
   );
 }
