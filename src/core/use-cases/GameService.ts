@@ -247,30 +247,29 @@ export class GameService {
   public makeGuess(word: string, dayIndex?: number): GuessResult {
     this.ensureInitialized();
     const normalized = this.normalizeWord(word);
-    const cleanWord = lemmatize(normalized);
+    const lemmatized = lemmatize(normalized);
 
     // Use provided dayIndex or fallback to current day
     const dayIndexParam = dayIndex ?? this.getDailySecret().dayIndex;
 
-    if (!this.wordToIndex.has(cleanWord)) {
-      return { word: cleanWord, rank: -1, similarity: 0, isUnknown: true };
+    // Try normalized first, fall back to lemmatized (single lookup each)
+    const normalizedIdx = this.wordToIndex.get(normalized);
+    const guess = normalizedIdx !== undefined ? normalized : lemmatized;
+    const userWordIdx = normalizedIdx ?? this.wordToIndex.get(lemmatized);
+
+    if (userWordIdx === undefined) {
+      return { word: guess, rank: -1, similarity: 0, isUnknown: true };
     }
 
     const secretWord = this.getTargetWord(dayIndexParam);
 
     // If guessed correctly
-    if (cleanWord === secretWord) {
-      return { word: cleanWord, rank: 1, similarity: 1.0, isUnknown: false };
+    if (normalized === secretWord || lemmatized === secretWord) {
+      return { word: secretWord, rank: 1, similarity: 1.0, isUnknown: false };
     }
 
     // Get Rankings
     const rankings = this.getDailyRankings(dayIndexParam, secretWord);
-
-    // Find where the user's word is in the list
-    const userWordIdx = this.wordToIndex.get(cleanWord);
-    if (userWordIdx === undefined) {
-      throw new Error(`Word not found in index: ${cleanWord}`);
-    }
 
     // indexOf is O(N), but on Int32Array it's fast.
     // Optimization: We could build a reverse map (WordIdx -> Rank), but that uses RAM.
@@ -279,7 +278,7 @@ export class GameService {
 
     // Rank is index + 1
     return {
-      word: cleanWord,
+      word: guess,
       rank: rankIndex + 1,
       similarity: 0,
       isUnknown: false,
