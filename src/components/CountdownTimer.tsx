@@ -28,5 +28,5 @@ export default function CountdownTimer() {
     return () => clearInterval(interval);
   }, []);
 
-  return <span>{timeLeft}</span>;
+  return <span className="font-mono tabular-nums">{timeLeft}</span>;
 }

@@ -16,19 +16,25 @@ type StatCardProps = {
 
 function StatCard({ label, value }: StatCardProps) {
   return (
-    <div>
-      <div>{value}</div>
-      <div>{label}</div>
+    <div className="bg-[var(--card)] rounded-xl p-4 text-center border border-[var(--border)]">
+      <div className="text-2xl font-bold text-[var(--accent)] font-mono">
+        {value}
+      </div>
+      <div className="text-xs text-[var(--text-muted)] mt-1 font-medium tracking-wide">
+        {label}
+      </div>
     </div>
   );
 }
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <div>
-      <div />
-      <span>{children}</span>
-      <div />
+    <div className="flex items-center gap-3 my-6">
+      <div className="flex-1 h-px bg-[var(--border)]" />
+      <span className="text-xs font-medium text-[var(--text-muted)] tracking-wider uppercase">
+        {children}
+      </span>
+      <div className="flex-1 h-px bg-[var(--border)]" />
     </div>
   );
 }
@@ -86,24 +92,36 @@ function DistributionChart({
   const maxCount = Math.max(...rangeCounts.map((r) => r.count), 1);
 
   return (
-    <div>
+    <div className="space-y-1.5">
       {rangeCounts.map((range) => {
         const percentage =
           range.count > 0 ? Math.round((range.count / maxCount) * 100) : 0;
+        const isToday =
+          todayAttempts !== undefined &&
+          todayAttempts >= range.min &&
+          todayAttempts <= range.max;
 
         return (
-          <div key={range.label}>
-            <div>{range.label}</div>
-            <div>
+          <div key={range.label} className="flex items-center gap-2 text-xs">
+            <div className="w-12 text-right text-[var(--text-muted)]">
+              {range.label}
+            </div>
+            <div className="flex-1 h-5 bg-[var(--border)] rounded-full overflow-hidden">
               <div
-                style={{ width: `${percentage}%` }}
+                className="h-full rounded-full transition-all duration-500"
+                style={{
+                  width: `${percentage}%`,
+                  backgroundColor: isToday
+                    ? "var(--accent)"
+                    : "var(--rank-default)",
+                }}
                 role="progressbar"
                 aria-valuenow={percentage}
                 aria-valuemin={0}
                 aria-valuemax={100}
               />
             </div>
-            <div>{range.count}</div>
+            <div className="w-6 text-[var(--text-muted)]">{range.count}</div>
           </div>
         );
       })}
@@ -122,16 +140,22 @@ function HistoryItem({ game }: HistoryItemProps) {
     : `Гульня #${game.dayIndex + 1}`;
 
   return (
-    <div>
-      <div>{game.won ? <Check size={16} /> : <X size={16} />}</div>
-      <div>{displayWord}</div>
-      <div>
-        <span>
+    <div className="flex items-center gap-3 py-3 border-b border-[var(--border)] last:border-0">
+      <div
+        className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${game.won ? "bg-[var(--rank-1)]/20 text-[var(--rank-1)]" : "bg-red-500/10 text-red-500"}`}
+      >
+        {game.won ? <Check size={12} /> : <X size={12} />}
+      </div>
+      <div className="font-semibold text-sm text-[var(--text)] flex-1">
+        {displayWord}
+      </div>
+      <div className="text-right text-xs text-[var(--text-muted)]">
+        <div>
           {game.won
             ? `${game.attempts} ${pluralize(game.attempts)}`
             : "Не адгадана"}
-        </span>
-        <span>{formatRelativeDate(game.dayIndex)}</span>
+        </div>
+        <div>{formatRelativeDate(game.dayIndex)}</div>
       </div>
     </div>
   );
@@ -178,10 +202,10 @@ export default function StatsPage() {
 
     const text = [
       "Мая статыстыка ў «Побач»:",
-      `🏆 Перамог: ${stats.gamesWon}/${stats.gamesPlayed} (${winRate}%)`,
-      `🔥 Макс. серыя: ${stats.maxStreak}`,
+      `Перамог: ${stats.gamesWon}/${stats.gamesPlayed} (${winRate}%)`,
+      `Макс. серыя: ${stats.maxStreak}`,
       stats.bestAttempts > 0
-        ? `🎯 Лепшы вынік: ${stats.bestAttempts} ${pluralize(stats.bestAttempts)}`
+        ? `Лепшы вынік: ${stats.bestAttempts} ${pluralize(stats.bestAttempts)}`
         : null,
       "pobach.app",
     ]
@@ -197,11 +221,11 @@ export default function StatsPage() {
   };
 
   return (
-    <main>
+    <main className="min-h-screen flex flex-col">
       <Header title="Статыстыка" />
 
-      <div>
-        <div>
+      <div className="flex-1 w-full max-w-[600px] mx-auto px-4 py-6">
+        <div className="grid grid-cols-4 gap-3 mb-2">
           <StatCard label="ГУЛЬНЯЎ" value={stats.gamesPlayed} />
           <StatCard label="% ПЕРАМОГ" value={winRate} />
           <StatCard label="СЕРЫЯ" value={stats.currentStreak} />
@@ -215,9 +239,11 @@ export default function StatsPage() {
         />
 
         <SectionTitle>Апошнія гульні</SectionTitle>
-        <div>
+        <div className="bg-[var(--card)] rounded-xl border border-[var(--border)] px-4">
           {history.length === 0 ? (
-            <div>Пакуль няма гісторыі гульняў</div>
+            <div className="py-6 text-center text-sm text-[var(--text-muted)]">
+              Пакуль няма гісторыі гульняў
+            </div>
           ) : (
             history.map((game) => (
               <HistoryItem key={game.dayIndex} game={game} />
@@ -225,15 +251,30 @@ export default function StatsPage() {
           )}
         </div>
 
-        <button type="button" onClick={onShareStats} disabled={isSharing}>
-          <Share2 size={18} />
-          ПАДЗЯЛІЦЦА
-        </button>
+        <div className="mt-6 flex justify-center relative">
+          <button
+            type="button"
+            onClick={onShareStats}
+            disabled={isSharing}
+            className="btn-primary"
+          >
+            <Share2 size={16} />
+            Падзяліцца статыстыкай
+          </button>
+          {showToast && (
+            <div
+              aria-live="polite"
+              className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-[var(--text)] text-[var(--bg)] text-xs font-medium whitespace-nowrap shadow-lg"
+            >
+              Скапіравана!
+            </div>
+          )}
+        </div>
       </div>
 
-      <Footer />
-
-      {showToast && <div aria-live="polite">Скапіравана!</div>}
+      <div className="w-full max-w-[600px] mx-auto px-4">
+        <Footer />
+      </div>
     </main>
   );
 }

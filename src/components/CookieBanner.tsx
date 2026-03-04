@@ -9,7 +9,6 @@ export default function CookieBanner() {
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
-    // Only show if consent has NOT been given yet
     if (hasConsented === false) {
       setIsVisible(true);
       setIsAnimating(true);
@@ -19,7 +18,7 @@ export default function CookieBanner() {
   const handleAccept = () => {
     setIsAnimating(false);
     setTimeout(() => {
-      giveConsent(); // Use context action
+      giveConsent();
       setIsVisible(false);
     }, 300);
   };
@@ -27,13 +26,19 @@ export default function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <div>
-      <div>
-        <p>
+    <div
+      className={`fixed bottom-0 left-0 right-0 z-40 p-4 transition-all duration-300 ${isAnimating ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
+    >
+      <div className="max-w-[600px] mx-auto bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-lg px-5 py-4 flex items-center justify-between gap-4">
+        <p className="text-sm text-[var(--text-muted)] flex-1">
           Мы выкарыстоўваем cookies, каб захоўваць ваш прагрэс і аналізаваць
           статыстыку гульні.
         </p>
-        <button onClick={handleAccept} type="button">
+        <button
+          onClick={handleAccept}
+          type="button"
+          className="btn-primary shrink-0 text-sm px-4 py-2"
+        >
           Зразумела
         </button>
       </div>

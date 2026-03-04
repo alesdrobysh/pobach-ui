@@ -127,18 +127,26 @@ export default function ShareButton({
   };
 
   return (
-    <>
+    <div className="relative inline-block">
       <button
         onClick={onShare}
         disabled={isSharing}
         aria-label="Падзяліцца вынікамі гульні"
         type="button"
+        className="btn-primary"
       >
-        <Share2 size={18} />
+        <Share2 size={16} />
         Падзяліцца
       </button>
 
-      {showToast && <div aria-live="polite">Скапіравана!</div>}
-    </>
+      {showToast && (
+        <div
+          aria-live="polite"
+          className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1.5 rounded-lg bg-[var(--text)] text-[var(--bg)] text-xs font-medium whitespace-nowrap shadow-lg"
+        >
+          Скапіравана!
+        </div>
+      )}
+    </div>
   );
 }

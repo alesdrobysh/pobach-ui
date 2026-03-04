@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
 import AuroraBackground from "@/components/AuroraBackground";
+import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -82,7 +83,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="be" suppressHydrationWarning>
-      <body>
+      <body className="font-sans bg-[var(--bg)] text-[var(--text)]">
         <PostHogProvider>
           <ThemeProvider>
             <AuroraBackground />

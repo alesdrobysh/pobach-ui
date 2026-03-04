@@ -9,15 +9,16 @@ type GiveUpModalProps = {
 
 export default function GiveUpModal({ onConfirm, onClose }: GiveUpModalProps) {
   return (
-    <Modal onClose={onClose} title="Ўпэўнены?" data-testid="give-up-modal">
-      <p>Вы сапраўды хочаце здацца? Гэта скіне вашу бягучую серыю перамог.</p>
+    <Modal onClose={onClose} title="Ўпэўнены?">
+      <p className="text-sm text-[var(--text-muted)] mb-5">
+        Вы сапраўды хочаце здацца? Гэта скіне вашу бягучую серыю перамог.
+      </p>
 
-      <div>
-        <button onClick={onConfirm} type="button">
+      <div className="flex items-center gap-3">
+        <button onClick={onConfirm} type="button" className="btn-primary">
           Здацца
         </button>
-
-        <button onClick={onClose} type="button">
+        <button onClick={onClose} type="button" className="btn-ghost">
           Не
         </button>
       </div>

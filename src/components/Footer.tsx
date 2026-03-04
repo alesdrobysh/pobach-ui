@@ -13,15 +13,19 @@ export default function Footer() {
   const pathname = usePathname();
   const links = LINKS.filter((l) => l.href !== pathname);
   return (
-    <footer>
-      Зроблена з ❤️ да роднай мовы
-      <br />
-      {links.map((l, i) => (
-        <span key={l.href}>
-          {i > 0 && " · "}
-          <Link href={l.href}>{l.label}</Link>
-        </span>
-      ))}
+    <footer className="border-t border-[var(--accent)]/20 pt-6 mt-12 mb-8 text-center text-sm text-[var(--text-muted)]">
+      <p className="mb-3">Зроблена з ❤️ да роднай мовы</p>
+      <nav className="flex justify-center gap-4">
+        {links.map((l) => (
+          <Link
+            key={l.href}
+            href={l.href}
+            className="hover:text-[var(--accent)] transition-colors"
+          >
+            {l.label}
+          </Link>
+        ))}
+      </nav>
     </footer>
   );
 }

@@ -30,16 +30,31 @@ export default function Modal({ children, onClose, title }: ModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
+      className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4"
     >
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only prevents overlay close */}
-      <div role="document" onClick={(e) => e.stopPropagation()}>
-        <div>
-          <h2 id="modal-title">{title}</h2>
-          <button onClick={onClose} aria-label="Закрыць" type="button">
+      <div
+        role="document"
+        onClick={(e) => e.stopPropagation()}
+        className="bg-[var(--card)] rounded-2xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto"
+      >
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--border)]">
+          <h2
+            id="modal-title"
+            className="font-serif text-xl font-semibold text-[var(--text)]"
+          >
+            {title}
+          </h2>
+          <button
+            onClick={onClose}
+            aria-label="Закрыць"
+            type="button"
+            className="w-8 h-8 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:bg-[var(--border)] transition-colors text-lg leading-none"
+          >
             ×
           </button>
         </div>
-        <div>{children}</div>
+        <div className="px-6 py-4">{children}</div>
       </div>
     </div>
   );
