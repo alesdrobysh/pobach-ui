@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import FinishCard from "@/components/FinishCard";
+import Footer from "@/components/Footer";
 import GiveUpModal from "@/components/GiveUpModal";
 import GuessCard from "@/components/GuessCard";
 import GuessInput from "@/components/GuessInput";
 import GuessList from "@/components/GuessList";
+import Header from "@/components/Header";
 import Modal from "@/components/modals/Modal";
-import PageHeader from "@/components/PageHeader";
 import RulesComponent from "@/components/RulesComponent";
 import { useGame } from "@/hooks/useGame";
 import { getCurrentDayIndex } from "@/lib/storage";
@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <main>
-      <PageHeader variant="main" onShowHelp={() => setShowHelp(true)} />
+      <Header />
 
       <div>дзень {getCurrentDayIndex() + 1}</div>
 
@@ -63,6 +63,9 @@ export default function Home() {
       {state.guesses.length === 0 ? (
         <div>
           <h2>Вітаем у «Побач»!</h2>
+          <button type="button" onClick={() => setShowHelp(true)}>
+            Як гуляць?
+          </button>
           <RulesComponent />
         </div>
       ) : (
@@ -82,12 +85,7 @@ export default function Home() {
         />
       )}
 
-      <footer>
-        Зроблена з ❤️ да роднай мовы
-        <br />
-        <Link href="/about">Пра праект</Link> ·{" "}
-        <Link href="/privacy">Прыватнасць</Link>
-      </footer>
+      <Footer />
     </main>
   );
 }

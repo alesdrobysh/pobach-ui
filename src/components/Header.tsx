@@ -1,16 +1,17 @@
+"use client";
+
 import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 
-type HeaderProps = {
-  onShowHelp: () => void;
-};
-
-export default function Header({ onShowHelp }: HeaderProps) {
+export default function Header({ title = "Побач" }: { title?: string }) {
   const { theme, toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const isMain = pathname === "/";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -66,36 +67,26 @@ export default function Header({ onShowHelp }: HeaderProps) {
         )}
       </div>
 
+      <h1>{title}</h1>
+
+      {!isMain && (
+        <Link href="/" aria-label="Вярнуцца да гульні">
+          ← Назад
+        </Link>
+      )}
+
       <button
-        onClick={() => window.location.reload()}
+        onClick={toggleTheme}
+        aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
+        title={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
         type="button"
-        aria-label="Побач - перазагрузіць гульню"
       >
-        ПОБАЧ
+        {theme === "light" ? (
+          <Moon size={18} />
+        ) : (
+          <Sun size={18} color="white" />
+        )}
       </button>
-
-      <div>
-        <button
-          onClick={onShowHelp}
-          aria-label="Паказаць інструкцыі як гуляць"
-          type="button"
-        >
-          Як гуляць?
-        </button>
-
-        <button
-          onClick={toggleTheme}
-          aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
-          title={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
-          type="button"
-        >
-          {theme === "light" ? (
-            <Moon size={18} />
-          ) : (
-            <Sun size={18} color="white" />
-          )}
-        </button>
-      </div>
     </header>
   );
 }

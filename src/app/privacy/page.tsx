@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import PageHeader from "@/components/PageHeader";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 export default function PrivacyPage() {
   return (
     <main>
-      <PageHeader variant="secondary" title="Прыватнасць" />
+      <Header title="Прыватнасць" />
 
       <section>
         <h2>Збор дадзеных</h2>
@@ -91,10 +91,7 @@ export default function PrivacyPage() {
         </p>
       </section>
 
-      <footer>
-        <Link href="/">← Вярнуцца да гульні</Link> ·{" "}
-        <Link href="/about">Пра праект</Link>
-      </footer>
+      <Footer />
     </main>
   );
 }

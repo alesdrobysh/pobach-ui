@@ -1,12 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import PageHeader from "@/components/PageHeader";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 export default function AboutPage() {
   return (
     <main>
-      <PageHeader variant="secondary" title="Пра гульню" />
+      <Header title="Пра праект" />
 
       <section>
         <h2>Як гэта працуе?</h2>
@@ -79,10 +79,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <footer>
-        <Link href="/">← Вярнуцца да гульні</Link> ·{" "}
-        <Link href="/privacy">Прыватнасць</Link>
-      </footer>
+      <Footer />
     </main>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
 import { Check, Share2, X } from "lucide-react";
-import Link from "next/link";
 import { useState } from "react";
-import PageHeader from "@/components/PageHeader";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import type { HistoryRecord } from "@/core/entities/game";
 import { formatRelativeDate } from "@/lib/stats";
 import { getCurrentDayIndex, getHistory, getStats } from "@/lib/storage";
@@ -198,7 +198,7 @@ export default function StatsPage() {
 
   return (
     <main>
-      <PageHeader variant="secondary" title="Статыстыка" />
+      <Header title="Статыстыка" />
 
       <div>
         <div>
@@ -231,10 +231,7 @@ export default function StatsPage() {
         </button>
       </div>
 
-      <footer>
-        <Link href="/">← Вярнуцца да гульні</Link> ·{" "}
-        <Link href="/privacy">Прыватнасць</Link>
-      </footer>
+      <Footer />
 
       {showToast && <div aria-live="polite">Скапіравана!</div>}
     </main>
