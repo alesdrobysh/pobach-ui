@@ -43,75 +43,72 @@ export default function FinishCard({
   return (
     <div
       data-testid="finish-card"
-      className="mb-6 rounded-2xl overflow-hidden bg-[var(--card)] shadow-md border border-[var(--border)]"
+      className="mb-6 rounded-2xl bg-[var(--card)] border border-[var(--border)] overflow-hidden"
     >
-      {/* Top accent border */}
-      <div
-        className={`h-1 w-full ${isWin ? "bg-[var(--rank-1)]" : "bg-[var(--border)]"}`}
-      />
-
-      <div className="px-6 py-5">
-        {/* Heading */}
-        <h2
-          className={`font-serif text-2xl font-semibold mb-2 ${isWin ? "text-[var(--rank-10)]" : "text-[var(--text-muted)]"}`}
-        >
-          {isWin ? "Віншуем!" : "Таямніца раскрыта!"}
-        </h2>
-
-        <p className="text-sm text-[var(--text-muted)] mb-4 leading-relaxed">
-          {isWin
-            ? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` (з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)})` : ""}! Заўтра будзе новае слова.`
-            : `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""} Заўтра будзе новае слова.`}
-        </p>
-
-        {!isWin && targetWord && (
-          <p className="text-sm mb-4">
-            Правільнае слова:{" "}
-            <strong className="text-[var(--accent)] font-semibold">
-              <DictionaryLink word={targetWord} />
-            </strong>
-          </p>
+      <div className="px-6 py-8 flex flex-col items-center text-center gap-6">
+        {/* Icon */}
+        {isWin ? (
+          <span
+            className="text-5xl animate-tada select-none"
+            role="img"
+            aria-label="Віншуем"
+          >
+            🎉
+          </span>
+        ) : (
+          <span
+            className="text-5xl select-none"
+            role="img"
+            aria-label="Гульня скончана"
+          >
+            🙁
+          </span>
         )}
 
-        {/* Stats chips */}
-        <div className="flex flex-wrap gap-2 mb-5">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-[var(--border)] text-[var(--text-muted)]">
-            {attempts} {pluralize(attempts)}
-          </span>
-          {hintsCount > 0 && (
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-[var(--border)] text-[var(--text-muted)]">
-              {hintsCount} {pluralizeHintsAccusative(hintsCount)}
-            </span>
+        {/* Heading + description */}
+        <div className="space-y-2">
+          <h2
+            className={`font-serif text-2xl font-bold ${isWin ? "text-[var(--accent)]" : "text-[var(--text)]"}`}
+          >
+            {isWin ? "Віншуем!" : "Таямніца раскрыта!"}
+          </h2>
+          <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-xs">
+            {isWin
+              ? `Вы адгадалі слова за ${attempts} ${pluralize(attempts)}${hintsCount > 0 ? ` з ${hintsCount} ${pluralizeHintsInstrumental(hintsCount)}` : ""}. Заўтра будзе новае слова.`
+              : `Дзякуй за гульню.${hintsCount > 0 ? ` Выкарыстана ${hintsCount} ${pluralizeHintsAccusative(hintsCount)}.` : ""} Заўтра будзе новае слова.`}
+          </p>
+          {!isWin && targetWord && (
+            <p className="text-sm">
+              Правільнае слова:{" "}
+              <strong className="text-[var(--accent)] font-semibold">
+                <DictionaryLink word={targetWord} />
+              </strong>
+            </p>
           )}
         </div>
 
-        {/* Share button */}
-        <div className="mb-5">
-          <ShareButton dayIndex={dayIndex} guesses={guesses} won={isWin} />
-        </div>
+        {/* Share */}
+        <ShareButton dayIndex={dayIndex} guesses={guesses} won={isWin} />
 
-        {/* Streak & stats link */}
-        {isWin && (
-          <div className="flex items-center gap-4 mb-5">
-            {streak > 0 && (
-              <Link
-                href="/stats"
-                className="flex items-center gap-1.5 text-[var(--accent)] text-sm font-medium hover:opacity-80 transition-opacity"
-              >
-                <Flame size={16} />
-                <span>
-                  {streak} {pluralizeStreak(streak)}
-                </span>
-              </Link>
-            )}
-            <Link
-              href="/stats"
-              className="text-sm text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
-            >
-              Паглядзець статыстыку
-            </Link>
-          </div>
+        {/* Streak */}
+        {isWin && streak > 0 && (
+          <Link
+            href="/stats"
+            className="flex items-center gap-1.5 text-[var(--accent)] text-sm font-medium hover:opacity-80 transition-opacity"
+          >
+            <Flame size={16} />
+            {streak} {pluralizeStreak(streak)}
+          </Link>
         )}
+
+        <div className="flex justify-center mt-2">
+          <a
+            href="/stats"
+            className="text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+          >
+            Паглядзець статыстыку
+          </a>
+        </div>
 
         {/* Countdown / new day */}
         <div className="text-sm text-[var(--text-muted)]">
@@ -125,7 +122,7 @@ export default function FinishCard({
             </button>
           ) : (
             <div className="flex items-center gap-2">
-              <span>Наступнае слова праз:</span>
+              <span>Наступнае слова праз</span>
               <span className="font-mono text-[var(--text)]">
                 <CountdownTimer />
               </span>
@@ -134,7 +131,7 @@ export default function FinishCard({
         </div>
       </div>
 
-      <TopWordsList dayIndex={dayIndex} mode={mode} targetWord={targetWord} />
+      <TopWordsList dayIndex={dayIndex} mode={mode} />
     </div>
   );
 }

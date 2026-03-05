@@ -8,13 +8,11 @@ import DictionaryLink from "./DictionaryLink";
 type TopWordsListProps = {
   dayIndex: number;
   mode: "win" | "lose";
-  targetWord?: string;
 };
 
 export default function TopWordsList({
   dayIndex,
   mode: _mode,
-  targetWord,
 }: TopWordsListProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

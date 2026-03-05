@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 export default function AboutPage() {
   return (
     <main className="min-h-screen flex flex-col">
-      <Header title="Пра праект" />
+      <Header />
 
       <div className="flex-1 w-full max-w-[600px] mx-auto px-4 py-8 space-y-8">
         <section>

@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Fira+Sans:wght@300;400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500&display=swap");
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-serif: "Space Grotesk", system-ui, sans-serif;
   --font-sans: "Fira Sans", system-ui, sans-serif;
 
   --color-bg: #f7f3ed;
@@ -10,7 +10,7 @@
   --color-card: #ffffff;
   --color-accent: #f58d3d;
   --color-border: #e8e0d5;
-  --color-text-muted: #8a7468;
+  --color-text-muted: #6b5a51;
 }
 
 :root {
@@ -19,13 +19,20 @@
   --card: #ffffff;
   --accent: #f58d3d;
   --border: #e8e0d5;
-  --text-muted: #8a7468;
+  --text-muted: #6b5a51;
 
-  --rank-1: #22c55e;
+  --rank-1: #16a34a;
   --rank-10: #16a34a;
-  --rank-100: #eab308;
+  --rank-100: #84cc16;
   --rank-1000: #f58d3d;
   --rank-default: #4b83c8;
+
+  --attempts-base: var(--accent);
+  --attempts-1: color-mix(in oklab, var(--attempts-base) 100%, white 0%);
+  --attempts-10: color-mix(in oklab, var(--attempts-base) 85%, white 15%);
+  --attempts-50: color-mix(in oklab, var(--attempts-base) 70%, white 30%);
+  --attempts-100: color-mix(in oklab, var(--attempts-base) 55%, white 45%);
+  --attempts-many: color-mix(in oklab, var(--attempts-base) 40%, white 60%);
 }
 
 [data-theme="dark"] {
@@ -55,7 +62,7 @@
 
   ::selection {
     background-color: var(--accent);
-    color: #fff;
+    color: #1b120e;
   }
 
   ::-webkit-scrollbar {
@@ -80,7 +87,7 @@
     gap: 0.5rem;
     padding: 0.625rem 1.25rem;
     background-color: var(--accent);
-    color: #fff;
+    color: #1b120e;
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: 0.9375rem;
@@ -169,6 +176,34 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes tada {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  10%,
+  20% {
+    transform: scale(0.9) rotate(-8deg);
+  }
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.15) rotate(8deg);
+  }
+  40%,
+  60%,
+  80% {
+    transform: scale(1.15) rotate(-8deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-tada {
+  animation: tada 0.9s ease-in-out both;
 }
 
 @keyframes blobFloat {

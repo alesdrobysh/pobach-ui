@@ -25,13 +25,13 @@ export default function Home() {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <Header />
+      <Header onHelpClick={() => setShowHelp(true)} />
 
-      <div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-12 pt-6">
+      <div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-12 pt-3">
         {/* Day badge */}
-        <div className="flex justify-center mb-6">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border border-[var(--accent)]/40 text-[var(--accent)]">
-            дзень {getCurrentDayIndex() + 1}
+        <div className="flex justify-center mb-3">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[0.7rem] font-medium border border-[var(--accent)]/40 text-[var(--accent)]">
+            Дзень #{getCurrentDayIndex() + 1}
           </span>
         </div>
 
@@ -69,19 +69,11 @@ export default function Home() {
         )}
 
         {state.guesses.length === 0 ? (
-          <div className="text-center py-8">
-            <h2 className="font-serif text-2xl font-semibold text-[var(--text)] mb-2">
-              Вітаем у «Побач»!
-            </h2>
-            <div className="w-12 h-0.5 bg-[var(--accent)]/40 mx-auto mb-6 rounded-full" />
-            <button
-              type="button"
-              onClick={() => setShowHelp(true)}
-              className="text-sm text-[var(--accent)] underline underline-offset-2 hover:opacity-80 transition-opacity mb-8"
-            >
-              Як гуляць?
-            </button>
-            <div className="text-left mt-6 text-sm text-[var(--text-muted)]">
+          <div className="mt-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
+              <h2 className="font-serif text-2xl font-bold text-[var(--text)] mb-4">
+                Як гуляць?
+              </h2>
               <RulesComponent />
             </div>
           </div>

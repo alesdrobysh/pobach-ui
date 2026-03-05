@@ -14,7 +14,7 @@ export default function GiveUpModal({ onConfirm, onClose }: GiveUpModalProps) {
         Вы сапраўды хочаце здацца? Гэта скіне вашу бягучую серыю перамог.
       </p>
 
-      <div className="flex items-center gap-3">
+      <div className="flex items-center justify-center gap-3">
         <button onClick={onConfirm} type="button" className="btn-primary">
           Здацца
         </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Share2, X } from "lucide-react";
+import { Share2 } from "lucide-react";
 import { useState } from "react";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -16,11 +16,11 @@ type StatCardProps = {
 
 function StatCard({ label, value }: StatCardProps) {
   return (
-    <div className="bg-[var(--card)] rounded-xl p-4 text-center border border-[var(--border)]">
-      <div className="text-2xl font-bold text-[var(--accent)] font-mono">
+    <div className="bg-[var(--card)] rounded-2xl p-3 text-center border border-[var(--border)] min-w-0">
+      <div className="text-3xl font-bold text-[var(--text)] leading-none mb-1.5">
         {value}
       </div>
-      <div className="text-xs text-[var(--text-muted)] mt-1 font-medium tracking-wide">
+      <div className="text-[9px] text-[var(--text-muted)] font-medium tracking-wider uppercase leading-tight">
         {label}
       </div>
     </div>
@@ -29,13 +29,9 @@ function StatCard({ label, value }: StatCardProps) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center gap-3 my-6">
-      <div className="flex-1 h-px bg-[var(--border)]" />
-      <span className="text-xs font-medium text-[var(--text-muted)] tracking-wider uppercase">
-        {children}
-      </span>
-      <div className="flex-1 h-px bg-[var(--border)]" />
-    </div>
+    <h2 className="text-lg font-bold text-[var(--text)] mt-8 mb-4">
+      {children}
+    </h2>
   );
 }
 
@@ -48,21 +44,15 @@ type DistributionRange = {
   label: string;
   min: number;
   max: number;
+  color: string;
 };
 
 const DISTRIBUTION_RANGES: DistributionRange[] = [
-  { label: "1", min: 1, max: 1 },
-  { label: "2-10", min: 2, max: 10 },
-  { label: "11-20", min: 11, max: 20 },
-  { label: "21-30", min: 21, max: 30 },
-  { label: "31-40", min: 31, max: 40 },
-  { label: "41-50", min: 41, max: 50 },
-  { label: "51-60", min: 51, max: 60 },
-  { label: "61-70", min: 61, max: 70 },
-  { label: "71-80", min: 71, max: 80 },
-  { label: "81-90", min: 81, max: 90 },
-  { label: "91-100", min: 91, max: 100 },
-  { label: "100+", min: 101, max: Infinity },
+  { label: "1", min: 1, max: 1, color: "var(--attempts-1)" },
+  { label: "2–10", min: 2, max: 10, color: "var(--attempts-10)" },
+  { label: "11–50", min: 11, max: 50, color: "var(--attempts-50)" },
+  { label: "51–100", min: 51, max: 100, color: "var(--attempts-100)" },
+  { label: "100+", min: 101, max: Infinity, color: "var(--attempts-many)" },
 ];
 
 function getCountForRange(
@@ -92,36 +82,46 @@ function DistributionChart({
   const maxCount = Math.max(...rangeCounts.map((r) => r.count), 1);
 
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-2">
       {rangeCounts.map((range) => {
         const percentage =
-          range.count > 0 ? Math.round((range.count / maxCount) * 100) : 0;
+          range.count > 0
+            ? Math.max(Math.round((range.count / maxCount) * 100), 8)
+            : 0;
         const isToday =
           todayAttempts !== undefined &&
           todayAttempts >= range.min &&
           todayAttempts <= range.max;
+        const barColor = isToday ? "var(--accent)" : range.color;
 
         return (
-          <div key={range.label} className="flex items-center gap-2 text-xs">
-            <div className="w-12 text-right text-[var(--text-muted)]">
+          <div key={range.label} className="flex items-center gap-3 text-sm">
+            <div className="w-10 text-right text-[var(--text-muted)] shrink-0">
               {range.label}
             </div>
-            <div className="flex-1 h-5 bg-[var(--border)] rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full transition-all duration-500"
-                style={{
-                  width: `${percentage}%`,
-                  backgroundColor: isToday
-                    ? "var(--accent)"
-                    : "var(--rank-default)",
-                }}
-                role="progressbar"
-                aria-valuenow={percentage}
-                aria-valuemin={0}
-                aria-valuemax={100}
-              />
+            <div className="flex-1 h-10 bg-[var(--border)] rounded-lg overflow-hidden relative">
+              {range.count > 0 ? (
+                <div
+                  className="h-full rounded-lg flex items-center justify-end pr-3 transition-all duration-500"
+                  style={{ width: `${percentage}%`, backgroundColor: barColor }}
+                  role="progressbar"
+                  aria-valuenow={range.count}
+                  aria-valuemin={0}
+                  aria-valuemax={maxCount}
+                >
+                  <span className="text-white font-bold text-sm">
+                    {range.count}
+                  </span>
+                </div>
+              ) : (
+                <div
+                  className="h-full w-12 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: barColor }}
+                >
+                  <span className="text-white font-bold text-sm">0</span>
+                </div>
+              )}
             </div>
-            <div className="w-6 text-[var(--text-muted)]">{range.count}</div>
           </div>
         );
       })}
@@ -134,28 +134,27 @@ type HistoryItemProps = {
 };
 
 function HistoryItem({ game }: HistoryItemProps) {
-  const targetWord = game.guesses.find((g) => g.rank === 1)?.word;
-  const displayWord = targetWord
-    ? targetWord.toUpperCase()
-    : `Гульня #${game.dayIndex + 1}`;
-
   return (
-    <div className="flex items-center gap-3 py-3 border-b border-[var(--border)] last:border-0">
-      <div
-        className={`w-6 h-6 rounded-full flex items-center justify-center shrink-0 ${game.won ? "bg-[var(--rank-1)]/20 text-[var(--rank-1)]" : "bg-red-500/10 text-red-500"}`}
-      >
-        {game.won ? <Check size={12} /> : <X size={12} />}
-      </div>
+    <div className="flex items-center gap-3 py-3.5 border-b border-[var(--border)] last:border-0">
+      <span
+        className={`w-2.5 h-2.5 rounded-full shrink-0 ${game.won ? "bg-[var(--rank-1)]" : "bg-red-400"}`}
+      />
       <div className="font-semibold text-sm text-[var(--text)] flex-1">
-        {displayWord}
+        Дзень #{game.dayIndex + 1}
       </div>
-      <div className="text-right text-xs text-[var(--text-muted)]">
-        <div>
-          {game.won
-            ? `${game.attempts} ${pluralize(game.attempts)}`
-            : "Не адгадана"}
-        </div>
-        <div>{formatRelativeDate(game.dayIndex)}</div>
+      <div className="text-xs text-[var(--text-muted)] flex items-center gap-3">
+        {game.won ? (
+          <span>
+            {game.attempts} {pluralize(game.attempts)}
+          </span>
+        ) : (
+          <span>Не адгадана</span>
+        )}
+        {(() => {
+          const hintCount = game.guesses.filter((g) => g.isHint).length;
+          return hintCount > 0 ? <span>{hintCount} падк.</span> : null;
+        })()}
+        <span>{formatRelativeDate(game.dayIndex)}</span>
       </div>
     </div>
   );
@@ -222,14 +221,14 @@ export default function StatsPage() {
 
   return (
     <main className="min-h-screen flex flex-col">
-      <Header title="Статыстыка" />
+      <Header />
 
       <div className="flex-1 w-full max-w-[600px] mx-auto px-4 py-6">
-        <div className="grid grid-cols-4 gap-3 mb-2">
-          <StatCard label="ГУЛЬНЯЎ" value={stats.gamesPlayed} />
-          <StatCard label="% ПЕРАМОГ" value={winRate} />
-          <StatCard label="СЕРЫЯ" value={stats.currentStreak} />
-          <StatCard label="МАКС. СЕРЫЯ" value={stats.maxStreak} />
+        <div className="grid grid-cols-4 gap-2">
+          <StatCard label="Гульняў" value={stats.gamesPlayed} />
+          <StatCard label="Перамог %" value={winRate} />
+          <StatCard label="Серыя" value={stats.currentStreak} />
+          <StatCard label="Макс." value={stats.maxStreak} />
         </div>
 
         <SectionTitle>Размеркаванне спроб</SectionTitle>
@@ -238,8 +237,8 @@ export default function StatsPage() {
           todayAttempts={todayAttempts}
         />
 
-        <SectionTitle>Апошнія гульні</SectionTitle>
-        <div className="bg-[var(--card)] rounded-xl border border-[var(--border)] px-4">
+        <SectionTitle>Гісторыя гульняў</SectionTitle>
+        <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] px-4">
           {history.length === 0 ? (
             <div className="py-6 text-center text-sm text-[var(--text-muted)]">
               Пакуль няма гісторыі гульняў
@@ -251,7 +250,7 @@ export default function StatsPage() {
           )}
         </div>
 
-        <div className="mt-6 flex justify-center relative">
+        <div className="mt-8 flex justify-center relative">
           <button
             type="button"
             onClick={onShareStats}

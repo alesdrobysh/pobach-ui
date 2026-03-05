@@ -8,8 +8,8 @@ export function getRankBadgeInfo(rank: number): {
   if (rank === 1) return { type: "win", label: "перамога" };
   if (rank <= 10) return { type: "hot", label: "вельмі блізка" };
   if (rank <= 100) return { type: "close", label: "блізка" };
-  if (rank <= 1000) return { type: "warm", label: "цёпла" };
-  return { type: "cold", label: "халодна" };
+  if (rank <= 1000) return { type: "warm", label: "трохі далей" };
+  return { type: "cold", label: "вельмі далёка" };
 }
 
 /**
