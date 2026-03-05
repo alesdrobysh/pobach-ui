@@ -60,7 +60,16 @@ export default function GuessInput({
     <div className="mb-4">
       {/* Row 1: input + submit */}
       <div className="flex gap-2">
-        <div className="flex-1 h-12 border border-[var(--border)] rounded-xl px-4 flex items-center bg-[var(--card)] focus-within:border-[var(--accent)] focus-within:ring-2 focus-within:ring-[var(--accent)]/20 transition-all">
+        <button
+          className="flex-1 h-12 border border-[var(--border)] rounded-xl px-4 flex items-center bg-[var(--card)] focus-within:border-[var(--accent)] focus-within:ring-2 focus-within:ring-[var(--accent)]/20 transition-all cursor-text text-left"
+          onClick={() => !isDisabled && divRef.current?.focus()}
+          onKeyDown={(e) =>
+            e.key === "Enter" && !isDisabled && divRef.current?.focus()
+          }
+          type="button"
+          tabIndex={0}
+          aria-label="Увядзіце слова для здагадкі"
+        >
           {/* biome-ignore lint/a11y/useSemanticElements: contenteditable div used intentionally to suppress Chrome Android autofill bar */}
           <div
             ref={divRef}
@@ -79,9 +88,9 @@ export default function GuessInput({
             inputMode="text"
             enterKeyHint="send"
             suppressContentEditableWarning
-            className="text-lg text-[var(--text)] outline-none min-h-[1.5rem] empty:before:content-['Увядзіце_слова...'] empty:before:text-[var(--text-muted)]"
+            className="text-lg text-[var(--text)] outline-none min-h-[1.5rem] w-full empty:before:content-['Увядзіце_слова...'] empty:before:text-[var(--text-muted)] text-left"
           />
-        </div>
+        </button>
         {!isDisabled && (
           <button
             onClick={onSubmit}
