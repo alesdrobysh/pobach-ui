@@ -17,7 +17,7 @@ type StatCardProps = {
 function StatCard({ label, value }: StatCardProps) {
   return (
     <div className="bg-[var(--card)] rounded-2xl p-3 text-center border border-[var(--border)] min-w-0">
-      <div className="text-3xl font-bold text-[var(--text)] leading-none mb-1.5">
+      <div className="text-3xl font-bold text-[var(--text)] leading-none mb-1.5 font-serif">
         {value}
       </div>
       <div className="text-[9px] text-[var(--text-muted)] font-medium tracking-wider uppercase leading-tight">
@@ -29,7 +29,7 @@ function StatCard({ label, value }: StatCardProps) {
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="text-lg font-bold text-[var(--text)] mt-8 mb-4">
+    <h2 className="text-lg font-bold text-[var(--text)] mt-8 mb-4 font-serif">
       {children}
     </h2>
   );
@@ -109,7 +109,7 @@ function DistributionChart({
                   aria-valuemin={0}
                   aria-valuemax={maxCount}
                 >
-                  <span className="text-white font-bold text-sm">
+                  <span className="text-white font-bold text-sm font-serif">
                     {range.count}
                   </span>
                 </div>
@@ -118,7 +118,9 @@ function DistributionChart({
                   className="h-full w-12 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: barColor }}
                 >
-                  <span className="text-white font-bold text-sm">0</span>
+                  <span className="text-white font-bold text-sm font-serif">
+                    0
+                  </span>
                 </div>
               )}
             </div>
@@ -140,19 +142,24 @@ function HistoryItem({ game }: HistoryItemProps) {
         className={`w-2.5 h-2.5 rounded-full shrink-0 ${game.won ? "bg-[var(--rank-1)]" : "bg-red-400"}`}
       />
       <div className="font-semibold text-sm text-[var(--text)] flex-1">
-        Дзень #{game.dayIndex + 1}
+        <span className="font-serif">#{game.dayIndex + 1}</span> Дзень
       </div>
       <div className="text-xs text-[var(--text-muted)] flex items-center gap-3">
         {game.won ? (
           <span>
-            {game.attempts} {pluralize(game.attempts)}
+            <span className="font-serif">{game.attempts}</span>{" "}
+            {pluralize(game.attempts)}
           </span>
         ) : (
           <span>Не адгадана</span>
         )}
         {(() => {
           const hintCount = game.guesses.filter((g) => g.isHint).length;
-          return hintCount > 0 ? <span>{hintCount} падк.</span> : null;
+          return hintCount > 0 ? (
+            <span>
+              <span className="font-serif">{hintCount}</span> падк.
+            </span>
+          ) : null;
         })()}
         <span>{formatRelativeDate(game.dayIndex)}</span>
       </div>

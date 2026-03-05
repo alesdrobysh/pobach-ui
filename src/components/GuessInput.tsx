@@ -142,7 +142,7 @@ export default function GuessInput({
             aria-label="Атрымаць падказку"
             aria-disabled={loading}
             type="button"
-            className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--accent)] border border-[var(--accent)] rounded-full hover:bg-[var(--accent)]/10 transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-medium text-[var(--accent)] border border-[var(--accent)] rounded-full hover:bg-[var(--accent)]/5 transition-colors disabled:opacity-50"
           >
             <Lightbulb size={12} />
             Падказка
