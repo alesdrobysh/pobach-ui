@@ -26,7 +26,8 @@ export default function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <div
+    <section
+      aria-label="Паведамленне пра cookies"
       className={`fixed bottom-0 left-0 right-0 z-40 p-4 transition-all duration-300 ${isAnimating ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
     >
       <div className="max-w-[600px] mx-auto bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-lg px-5 py-4 flex items-center justify-between gap-4">
@@ -42,6 +43,6 @@ export default function CookieBanner() {
           Зразумела
         </button>
       </div>
-    </div>
+    </section>
   );
 }

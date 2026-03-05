@@ -70,6 +70,7 @@ export default function GuessInput({
             onPaste={handlePaste}
             role="textbox"
             aria-label="Увядзіце слова для здагадкі"
+            aria-placeholder="Увядзіце слова..."
             aria-describedby={error ? "error-message" : undefined}
             tabIndex={0}
             spellCheck={false}

@@ -21,6 +21,7 @@ export default function RulesComponent({
             <span
               className="w-8 h-2 rounded-full"
               style={{ backgroundColor: "var(--rank-1)" }}
+              aria-hidden="true"
             />
             <span className="text-xs text-[var(--text-muted)]">
               Перамога №1
@@ -30,6 +31,7 @@ export default function RulesComponent({
             <span
               className="w-8 h-2 rounded-full"
               style={{ backgroundColor: "var(--rank-10)" }}
+              aria-hidden="true"
             />
             <span className="text-xs text-[var(--text-muted)]">
               Вельмі блізка 2–10
@@ -39,6 +41,7 @@ export default function RulesComponent({
             <span
               className="w-8 h-2 rounded-full"
               style={{ backgroundColor: "var(--rank-100)" }}
+              aria-hidden="true"
             />
             <span className="text-xs text-[var(--text-muted)]">
               Блізка 11–100
@@ -48,6 +51,7 @@ export default function RulesComponent({
             <span
               className="w-8 h-2 rounded-full"
               style={{ backgroundColor: "var(--rank-1000)" }}
+              aria-hidden="true"
             />
             <span className="text-xs text-[var(--text-muted)]">
               Трохі далей 101–1000
@@ -57,6 +61,7 @@ export default function RulesComponent({
             <span
               className="w-8 h-2 rounded-full"
               style={{ backgroundColor: "var(--rank-default)" }}
+              aria-hidden="true"
             />
             <span className="text-xs text-[var(--text-muted)]">
               Вельмі далёка 1001+
@@ -83,6 +88,7 @@ export default function RulesComponent({
           <span
             className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
             style={{ backgroundColor: "var(--rank-1)" }}
+            aria-hidden="true"
           />
           <span>
             Лес — <strong>перамога</strong> (№1)
@@ -92,6 +98,7 @@ export default function RulesComponent({
           <span
             className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
             style={{ backgroundColor: "var(--rank-10)" }}
+            aria-hidden="true"
           />
           <span>
             Дрэва — <strong>вельмі блізка</strong> (№4)
@@ -101,6 +108,7 @@ export default function RulesComponent({
           <span
             className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
             style={{ backgroundColor: "var(--rank-100)" }}
+            aria-hidden="true"
           />
           <span>
             Птушка — <strong>блізка</strong> (№45)
@@ -110,6 +118,7 @@ export default function RulesComponent({
           <span
             className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
             style={{ backgroundColor: "var(--rank-1000)" }}
+            aria-hidden="true"
           />
           <span>
             Грыб — <strong>трохі далей</strong> (№215)
@@ -119,6 +128,7 @@ export default function RulesComponent({
           <span
             className="shrink-0 w-3 h-3 rounded-sm mt-0.5"
             style={{ backgroundColor: "var(--rank-default)" }}
+            aria-hidden="true"
           />
           <span>
             Аўтамабіль — <strong>вельмі далёка</strong> (№15000)

@@ -11,6 +11,7 @@ const DictionaryLink: FC<DictionaryLinkProps> = (props) => (
     className={`hover:text-[var(--accent)] transition-colors underline-offset-2 hover:underline ${props.className ?? ""}`}
     target="_blank"
     rel="noopener noreferrer"
+    aria-label={`${props.word} (адкрыецца ў новым акне)`}
   >
     {props.word}
   </a>
