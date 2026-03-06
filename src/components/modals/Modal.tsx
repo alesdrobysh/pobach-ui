@@ -1,5 +1,6 @@
 "use client";
 
+import { X } from "lucide-react";
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 
@@ -51,7 +52,7 @@ export default function Modal({ children, onClose, title }: ModalProps) {
             type="button"
             className="w-8 h-8 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:bg-[var(--border)] transition-colors text-lg leading-none"
           >
-            <span aria-hidden="true">×</span>
+            <X size={18} aria-hidden="true" />
           </button>
         </div>
         <div className="px-6 py-4">{children}</div>

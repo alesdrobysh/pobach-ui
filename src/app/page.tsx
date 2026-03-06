@@ -29,8 +29,8 @@ export default function Home() {
 
       <div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-12 pt-3">
         {/* Day badge */}
-        <div className="flex justify-center mb-3">
-          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[0.7rem] font-medium border border-[var(--accent)]/40 text-[var(--accent)]">
+        <div className="flex justify-left">
+          <span className="inline-flex items-center px-2 py-0.5 text-[0.7rem] font-medium text-[var(--accent)]">
             Дзень #{getCurrentDayIndex() + 1}
           </span>
         </div>
