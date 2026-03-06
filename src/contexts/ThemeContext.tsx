@@ -38,6 +38,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     if (mounted) {
       document.documentElement.setAttribute("data-theme", theme);
       localStorage.setItem("pobach_theme", theme);
+      document.querySelectorAll('meta[name="theme-color"]').forEach((meta) => {
+        meta.setAttribute("content", theme === "dark" ? "#1A1410" : "#F7F3ED");
+      });
     }
   }, [theme, mounted]);
 
