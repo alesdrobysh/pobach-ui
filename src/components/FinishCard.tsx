@@ -102,12 +102,12 @@ export default function FinishCard({
         )}
 
         <div className="flex justify-center mt-2">
-          <a
+          <Link
             href="/stats"
             className="text-xs text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
           >
             Паглядзець статыстыку
-          </a>
+          </Link>
         </div>
 
         {/* Countdown / new day */}
