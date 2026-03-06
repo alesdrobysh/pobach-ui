@@ -2,12 +2,14 @@
  * Returns badge type and closeness label for a given rank
  */
 export function getRankBadgeInfo(rank: number): {
-  type: "hot" | "warm" | "cold";
+  type: "win" | "hot" | "close" | "warm" | "cold";
   label: string;
 } {
+  if (rank === 1) return { type: "win", label: "перамога" };
   if (rank <= 10) return { type: "hot", label: "вельмі блізка" };
-  if (rank <= 500) return { type: "warm", label: "цёпла" };
-  return { type: "cold", label: "халодна" };
+  if (rank <= 100) return { type: "close", label: "блізка" };
+  if (rank <= 1000) return { type: "warm", label: "трохі далей" };
+  return { type: "cold", label: "вельмі далёка" };
 }
 
 /**
@@ -15,6 +17,7 @@ export function getRankBadgeInfo(rank: number): {
  */
 export function getRankColor(rank: number): string {
   if (rank === 1) return "var(--rank-1)";
+  if (rank <= 10) return "var(--rank-10)";
   if (rank <= 100) return "var(--rank-100)";
   if (rank <= 1000) return "var(--rank-1000)";
   return "var(--rank-default)";

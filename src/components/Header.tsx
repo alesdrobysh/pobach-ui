@@ -1,107 +1,74 @@
-import { Moon, Sun } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { useTheme } from "@/contexts/ThemeContext";
-import styles from "./Header.module.css";
+"use client";
 
-type HeaderProps = {
-  onShowHelp: () => void;
+import { ArrowLeft, BarChart2, HelpCircle, Moon, Sun } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useTheme } from "@/contexts/ThemeContext";
+
+const PAGE_TITLES: Record<string, string> = {
+  "/": "ПОБАЧ",
+  "/stats": "Статыстыка",
+  "/about": "Пра гульню",
+  "/privacy": "Прыватнасць",
 };
 
-export default function Header({ onShowHelp }: HeaderProps) {
+export default function Header({ onHelpClick }: { onHelpClick?: () => void }) {
   const { theme, toggleTheme } = useTheme();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setMenuOpen(false);
-      }
-    };
-
-    if (menuOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuOpen]);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  const title = PAGE_TITLES[pathname] ?? "ПОБАЧ";
 
   return (
-    <header className={styles.header}>
-      <div className={styles.dropdownContainer} ref={dropdownRef}>
-        <button
-          type="button"
-          className={`${styles.hamburgerButton} ${menuOpen ? styles.hamburgerOpen : ""}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Закрыць меню" : "Адкрыць меню"}
-          aria-expanded={menuOpen}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-        {menuOpen && (
-          <div className={styles.dropdown}>
+    <header className="border-b border-[var(--border)] bg-[var(--bg)]">
+      <div className="flex items-center justify-between px-4 py-3 max-w-[600px] mx-auto">
+        {/* Left: back button (non-home) or logo */}
+        {!isHome ? (
+          <div className="flex items-center gap-2">
             <Link
-              href="/stats"
-              className={styles.dropdownItem}
-              onClick={() => setMenuOpen(false)}
-              aria-label="Паказаць статыстыку"
+              href="/"
+              aria-label="Назад"
+              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
             >
-              Статыстыка
+              <ArrowLeft size={18} />
             </Link>
-
-            <Link
-              href="/about"
-              className={styles.dropdownItem}
-              onClick={() => setMenuOpen(false)}
-              aria-label="Паказаць інфармацыю пра праект"
-            >
-              Пра праект
-            </Link>
+            <span className="font-serif font-bold text-[var(--text)] tracking-wide text-xl leading-none">
+              {title}
+            </span>
           </div>
+        ) : (
+          <span className="font-serif font-bold text-[var(--accent)] tracking-wider text-[1.75rem] leading-none">
+            {title}
+          </span>
         )}
-      </div>
 
-      <button
-        className={styles.title}
-        onClick={() => window.location.reload()}
-        type="button"
-        aria-label="Побач - перазагрузіць гульню"
-      >
-        ПОБАЧ
-      </button>
-
-      <div className={styles.rightActions}>
-        <button
-          className={styles.menuButton}
-          onClick={onShowHelp}
-          aria-label="Паказаць інструкцыі як гуляць"
-          type="button"
-        >
-          Як гуляць?
-        </button>
-
-        <button
-          className={styles.themeToggle}
-          onClick={toggleTheme}
-          aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
-          title={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
-          type="button"
-        >
-          {theme === "light" ? (
-            <Moon size={18} />
-          ) : (
-            <Sun size={18} color="white" />
+        {/* Right: icon group */}
+        <div className="flex items-center gap-1">
+          {onHelpClick && (
+            <button
+              type="button"
+              onClick={onHelpClick}
+              aria-label="Як гуляць?"
+              className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
+            >
+              <HelpCircle size={18} />
+            </button>
           )}
-        </button>
+          <Link
+            href="/stats"
+            aria-label="Статыстыка"
+            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
+          >
+            <BarChart2 size={18} />
+          </Link>
+          <button
+            onClick={toggleTheme}
+            aria-label={`Пераключыць на ${theme === "light" ? "цёмную" : "светлую"} тэму`}
+            type="button"
+            className="w-9 h-9 flex items-center justify-center rounded-full hover:bg-[var(--border)] transition-colors text-[var(--text)]"
+          >
+            {theme === "light" ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
+        </div>
       </div>
     </header>
   );

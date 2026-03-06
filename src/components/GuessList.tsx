@@ -1,7 +1,6 @@
 import { BookOpen } from "lucide-react";
 import type { Guess } from "@/core/entities/game";
 import GuessCard from "./GuessCard";
-import styles from "./GuessList.module.css";
 
 type GuessListProps = {
   guesses: Guess[];
@@ -9,34 +8,30 @@ type GuessListProps = {
 
 export default function GuessList({ guesses }: GuessListProps) {
   return (
-    <>
-      <div className={styles.header}>
+    <div>
+      <div className="flex items-center justify-between mb-3">
         {guesses.length > 0 && (
-          <span className={styles.hint}>
+          <span className="flex items-center gap-1.5 text-xs text-[var(--text-muted)]">
             <BookOpen size={12} />
-            <span className={styles.hintTextShort}>
-              Слоўнік па кліку на слова
-            </span>
-            <span className={styles.hintTextLong}>
-              Націсніце на любое слова для тлумачэння
-            </span>
+            <span className="hidden sm:inline">Слоўнік па кліку на слова</span>
+            <span className="sm:hidden">Націсніце на слова</span>
           </span>
         )}
         <output
-          className={styles.guessCounter}
           aria-live="polite"
           aria-label={`Колькасць спроб: ${guesses.length}`}
+          className="text-sm font-medium text-[var(--accent)] ml-auto"
         >
           Спроб: {guesses.length}
         </output>
       </div>
-      <ul className={styles.list} aria-label="Спіс здагадак">
+      <ul aria-label="Спіс здагадак" className="flex flex-col gap-2">
         {guesses.map((guess) => (
           <li key={guess.word}>
             <GuessCard guess={guess} isWin={guess.rank === 1} />
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 }

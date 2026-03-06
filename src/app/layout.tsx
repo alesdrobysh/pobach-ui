@@ -1,28 +1,20 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import AuroraBackground from "@/components/AuroraBackground";
+import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { PostHogProvider } from "@/providers/PostHogProvider";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#7c3aed",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#e58e3f" },
+    { media: "(prefers-color-scheme: dark)", color: "#e58e3f" },
+  ],
 };
 
 // Belarusian metadata (default)
@@ -78,12 +70,8 @@ export const metadata: Metadata = {
   ],
 
   icons: {
-    icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.ico" },
-    ],
-    apple: "/apple-touch-icon.png",
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: "/icon.svg", // Modern iOS supports SVG; otherwise use an auto-generated PNG
   },
 };
 
@@ -94,7 +82,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="be" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="font-sans bg-[var(--bg)] text-[var(--text)]">
         <PostHogProvider>
           <ThemeProvider>
             <AuroraBackground />

@@ -1,89 +1,107 @@
 "use client";
 
-import Link from "next/link";
-import PageHeader from "@/components/PageHeader";
-import styles from "./page.module.css";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 export default function AboutPage() {
   return (
-    <main className={styles.container}>
-      <PageHeader variant="secondary" title="Пра гульню" />
+    <main className="min-h-screen flex flex-col">
+      <Header />
 
-      <section className={styles.section}>
-        <h2>Як гэта працуе?</h2>
-        <p>
-          Побач выкарыстоўвае алгарытмы машыннага навучання для вызначэння
-          семантычнай блізкасці слоў. Мадэль аналізуе, як часта словы ўжываюцца
-          разам у тэкстах, і будуе "карту" іх сэнсаў.
-        </p>
-      </section>
+      <div className="flex-1 w-full max-w-[600px] mx-auto px-4 py-8 space-y-8">
+        <section>
+          <h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+            Як гэта працуе?
+          </h2>
+          <p className="text-sm text-[var(--text-muted)] leading-relaxed">
+            Побач выкарыстоўвае алгарытмы машыннага навучання для вызначэння
+            семантычнай блізкасці слоў. Мадэль аналізуе, як часта словы
+            ўжываюцца разам у тэкстах, і будуе "карту" іх сэнсаў.
+          </p>
+        </section>
 
-      <section className={styles.section}>
-        <h2>Стваральнік</h2>
-        <p>Зроблена з ❤️ да роднай мовы</p>
-        <p>
-          Натхненнем сталі{" "}
-          <a
-            href="https://contexto.me"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Contexto
-          </a>{" "}
-          і{" "}
-          <a
-            href="https://semantle.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Semantle
-          </a>
-        </p>
-        <p>
-          Аўтар:{" "}
-          <a
-            href="https://github.com/alesdrobysh"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            alesdrobysh
-          </a>
-        </p>
-        <p>База слоў:</p>
-        <ul>
-          <li>
+        <section>
+          <h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+            Стваральнік
+          </h2>
+          <p className="text-sm text-[var(--text-muted)] mb-2">
+            Зроблена з ❤️ да роднай мовы
+          </p>
+          <p className="text-sm text-[var(--text-muted)] mb-2">
+            Натхненнем сталі{" "}
             <a
-              href="https://github.com/Belarus/GrammarDB"
+              href="https://contexto.me"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-[var(--accent)] hover:underline"
             >
-              Belarus/GrammarDB
-            </a>
-          </li>
-          <li>
+              Contexto
+            </a>{" "}
+            і{" "}
             <a
-              href="https://github.com/verbumby/slouniki"
+              href="https://semantle.com"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-[var(--accent)] hover:underline"
             >
-              verbumby/slouniki
+              Semantle
             </a>
-          </li>
-        </ul>
-      </section>
+          </p>
+          <p className="text-sm text-[var(--text-muted)] mb-3">
+            Аўтар:{" "}
+            <a
+              href="https://github.com/alesdrobysh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--accent)] hover:underline"
+            >
+              alesdrobysh
+            </a>
+          </p>
+          <p className="text-sm text-[var(--text-muted)] mb-2">База слоў:</p>
+          <ul className="text-sm text-[var(--text-muted)] space-y-1 ml-4">
+            <li>
+              <a
+                href="https://github.com/Belarus/GrammarDB"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent)] hover:underline"
+              >
+                Belarus/GrammarDB
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/verbumby/slouniki"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent)] hover:underline"
+              >
+                verbumby/slouniki
+              </a>
+            </li>
+          </ul>
+        </section>
 
-      <section className={styles.section}>
-        <h2>Кантакт</h2>
-        <p>
-          Маеце пытанні або прапановы? Напішыце нам па пошце{" "}
-          <a href="mailto:support@pobach.app">support@pobach.app</a>
-        </p>
-      </section>
+        <section>
+          <h2 className="font-serif text-xl font-semibold text-[var(--text)] mb-3">
+            Кантакт
+          </h2>
+          <p className="text-sm text-[var(--text-muted)]">
+            Маеце пытанні або прапановы? Напішыце нам па пошце{" "}
+            <a
+              href="mailto:support@pobach.app"
+              className="text-[var(--accent)] hover:underline"
+            >
+              support@pobach.app
+            </a>
+          </p>
+        </section>
+      </div>
 
-      <footer className={styles.footer}>
-        <Link href="/">← Вярнуцца да гульні</Link> ·{" "}
-        <Link href="/privacy">Прыватнасць</Link>
-      </footer>
+      <div className="w-full max-w-[600px] mx-auto px-4">
+        <Footer />
+      </div>
     </main>
   );
 }

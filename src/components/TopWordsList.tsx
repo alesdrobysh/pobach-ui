@@ -4,18 +4,15 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type { TopWord } from "@/core/entities/game";
 import DictionaryLink from "./DictionaryLink";
-import styles from "./TopWordsList.module.css";
 
 type TopWordsListProps = {
   dayIndex: number;
   mode: "win" | "lose";
-  targetWord?: string;
 };
 
 export default function TopWordsList({
   dayIndex,
   mode: _mode,
-  targetWord,
 }: TopWordsListProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -23,11 +20,8 @@ export default function TopWordsList({
   const [error, setError] = useState<string | null>(null);
 
   const toggleExpanded = async () => {
-    if (!isExpanded) {
-      // Load data on first expand
-      if (!topWords) {
-        await loadTopWords();
-      }
+    if (!isExpanded && !topWords) {
+      await loadTopWords();
     }
     setIsExpanded(!isExpanded);
   };
@@ -52,71 +46,61 @@ export default function TopWordsList({
   };
 
   return (
-    <div className={styles.topWordsSection}>
+    <div className="border-t border-[var(--border)]">
       <button
-        className={styles.toggleButton}
         onClick={toggleExpanded}
         aria-expanded={isExpanded}
         aria-controls="top-words-list"
         type="button"
+        className="w-full flex items-center justify-between px-6 py-3 text-sm text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/30 transition-colors"
       >
         Паказаць бліжэйшыя словы
         <ChevronDown
           size={16}
-          className={`${styles.chevron} ${isExpanded ? styles.chevronRotated : ""}`}
+          className={`transition-transform ${isExpanded ? "rotate-180" : ""}`}
         />
       </button>
 
       {isExpanded && (
-        <div id="top-words-list" className={styles.wordsContainer}>
+        <div id="top-words-list" className="px-6 pb-4">
           {isLoading && (
-            <div className={styles.skeletonContainer}>
+            <div className="space-y-2">
               {Array.from({ length: 10 }, (_, i) => (
                 // biome-ignore lint/suspicious/noArrayIndexKey: static skeleton list
-                <div key={`skeleton-${i}`} className={styles.skeletonRow}>
-                  <div className={styles.skeletonRank}></div>
-                  <div className={styles.skeletonWord}></div>
+                <div key={`skeleton-${i}`} className="flex gap-3 animate-pulse">
+                  <div className="h-4 w-8 bg-[var(--border)] rounded" />
+                  <div className="h-4 w-24 bg-[var(--border)] rounded" />
                 </div>
               ))}
             </div>
           )}
 
-          {error && <div className={styles.errorMessage}>{error}</div>}
+          {error && <div className="text-sm text-red-500">{error}</div>}
 
           {topWords && (
-            <div className={styles.tableContainer}>
-              <table className={styles.wordsTable}>
-                <thead>
-                  <tr>
-                    <th className={styles.rankHeader}>Месца</th>
-                    <th className={styles.wordHeader}>Слова</th>
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-xs text-[var(--text-muted)] border-b border-[var(--border)]">
+                  <th className="pb-2 font-medium w-12">Месца</th>
+                  <th className="pb-2 font-medium">Слова</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topWords.map((word) => (
+                  <tr
+                    key={word.rank}
+                    className={`border-b border-[var(--border)]/50 last:border-0 ${word.rank === 1 ? "text-[var(--rank-1)] font-semibold" : "text-[var(--text)]"}`}
+                  >
+                    <td className="py-1.5 text-[var(--text-muted)] font-mono text-xs">
+                      #{word.rank}
+                    </td>
+                    <td className="py-1.5">
+                      <DictionaryLink word={word.word} />
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {topWords.map((word) => (
-                    <tr key={word.rank}>
-                      <td className={styles.rankCell}>
-                        {word.rank === 1 ? (
-                          <span className={styles.rankOne}>{word.rank}</span>
-                        ) : (
-                          word.rank
-                        )}
-                      </td>
-                      <td className={styles.wordCell}>
-                        <DictionaryLink
-                          word={word.word}
-                          className={
-                            word.rank === 1 && targetWord
-                              ? styles.targetWord
-                              : styles.wordLink
-                          }
-                        />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       )}

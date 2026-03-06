@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "./GiveUpModal.module.css";
 import Modal from "./modals/Modal";
 
 type GiveUpModalProps = {
@@ -10,21 +9,16 @@ type GiveUpModalProps = {
 
 export default function GiveUpModal({ onConfirm, onClose }: GiveUpModalProps) {
   return (
-    <Modal onClose={onClose} title="Ўпэўнены?" data-testid="give-up-modal">
-      <p className={styles.message}>
+    <Modal onClose={onClose} title="Ўпэўнены?">
+      <p className="text-sm text-[var(--text-muted)] mb-5">
         Вы сапраўды хочаце здацца? Гэта скіне вашу бягучую серыю перамог.
       </p>
 
-      <div className={styles.buttonContainer}>
-        <button
-          onClick={onConfirm}
-          className={styles.confirmButton}
-          type="button"
-        >
+      <div className="flex items-center justify-center gap-3">
+        <button onClick={onConfirm} type="button" className="btn-primary">
           Здацца
         </button>
-
-        <button onClick={onClose} className={styles.cancelButton} type="button">
+        <button onClick={onClose} type="button" className="btn-ghost">
           Не
         </button>
       </div>
