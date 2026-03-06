@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import type { HistoryRecord } from "@/core/entities/game";
 import { formatRelativeDate } from "@/lib/stats";
-import { getCurrentDayIndex, getHistory, getStats } from "@/lib/storage";
+import { getHistory, getStats } from "@/lib/storage";
 import { pluralize } from "@/lib/utils";
 
 type StatCardProps = {
@@ -37,7 +37,6 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 type DistributionChartProps = {
   distribution: Record<number, number>;
-  todayAttempts?: number;
 };
 
 type DistributionRange = {
@@ -70,10 +69,7 @@ function getCountForRange(
   return count;
 }
 
-function DistributionChart({
-  distribution,
-  todayAttempts,
-}: DistributionChartProps) {
+function DistributionChart({ distribution }: DistributionChartProps) {
   const rangeCounts = DISTRIBUTION_RANGES.map((range) => ({
     ...range,
     count: getCountForRange(distribution, range.min, range.max),
@@ -88,11 +84,6 @@ function DistributionChart({
           range.count > 0
             ? Math.max(Math.round((range.count / maxCount) * 100), 8)
             : 0;
-        const isToday =
-          todayAttempts !== undefined &&
-          todayAttempts >= range.min &&
-          todayAttempts <= range.max;
-        const barColor = isToday ? "var(--accent)" : range.color;
 
         return (
           <div key={range.label} className="flex items-center gap-3 text-sm">
@@ -103,7 +94,10 @@ function DistributionChart({
               {range.count > 0 ? (
                 <div
                   className="h-full rounded-lg flex items-center justify-end pr-3 transition-all duration-500"
-                  style={{ width: `${percentage}%`, backgroundColor: barColor }}
+                  style={{
+                    width: `${percentage}%`,
+                    backgroundColor: range.color,
+                  }}
                   role="progressbar"
                   aria-valuenow={range.count}
                   aria-valuemin={0}
@@ -116,7 +110,7 @@ function DistributionChart({
               ) : (
                 <div
                   className="h-full w-12 rounded-lg flex items-center justify-center"
-                  style={{ backgroundColor: barColor }}
+                  style={{ backgroundColor: range.color }}
                 >
                   <span className="text-white font-bold text-sm font-serif">
                     0
@@ -190,9 +184,6 @@ async function handleShare(
 export default function StatsPage() {
   const stats = getStats();
   const history = getHistory().slice(0, 10).reverse();
-  const currentDay = getCurrentDayIndex();
-  const todayGame = history.find((g) => g.dayIndex === currentDay);
-  const todayAttempts = todayGame?.won ? todayGame.attempts : undefined;
 
   const [showToast, setShowToast] = useState(false);
   const [isSharing, setIsSharing] = useState(false);
@@ -239,10 +230,7 @@ export default function StatsPage() {
         </div>
 
         <SectionTitle>Размеркаванне спроб</SectionTitle>
-        <DistributionChart
-          distribution={stats.distribution}
-          todayAttempts={todayAttempts}
-        />
+        <DistributionChart distribution={stats.distribution} />
 
         <SectionTitle>Гісторыя гульняў</SectionTitle>
         <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] px-4">
