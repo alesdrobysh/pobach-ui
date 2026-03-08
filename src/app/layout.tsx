@@ -4,6 +4,7 @@ import AuroraBackground from "@/components/AuroraBackground";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import { BannerProvider } from "@/contexts/BannerContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { PostHogProvider } from "@/providers/PostHogProvider";
 
@@ -83,14 +84,16 @@ export default function RootLayout({
   return (
     <html lang="be" suppressHydrationWarning>
       <body className="font-sans bg-[var(--bg)] text-[var(--text)]">
-        <PostHogProvider>
-          <ThemeProvider>
-            <AuroraBackground />
-            {children}
-          </ThemeProvider>
-          <CookieBanner />
-        </PostHogProvider>
-        <ServiceWorkerRegistration />
+        <BannerProvider>
+          <PostHogProvider>
+            <ThemeProvider>
+              <AuroraBackground />
+              {children}
+            </ThemeProvider>
+            <CookieBanner />
+          </PostHogProvider>
+          <ServiceWorkerRegistration />
+        </BannerProvider>
         <Analytics />
       </body>
     </html>
