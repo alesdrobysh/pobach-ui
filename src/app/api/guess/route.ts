@@ -2,8 +2,31 @@ import { NextResponse } from "next/server";
 import { gameService, initializeGameService } from "@/lib/container";
 import { validateDayIndex } from "@/lib/utils";
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const word = searchParams.get("word");
+    const dayIndexStr = searchParams.get("dayIndex");
+
+    if (!word) {
+      return NextResponse.json({ error: "Патрабуецца слова" }, { status: 400 });
+    }
+
+    if (!dayIndexStr) {
+      return NextResponse.json(
+        { error: "Патрабуецца dayIndex" },
+        { status: 400 },
+      );
+    }
+
+    const dayIndex = parseInt(dayIndexStr, 10);
+    if (Number.isNaN(dayIndex)) {
+      return NextResponse.json(
+        { error: "Няправільны індэкс дня" },
+        { status: 400 },
+      );
+    }
+
     // Ensure service is initialized (lazy loading)
     try {
       await initializeGameService();
@@ -15,42 +38,25 @@ export async function POST(request: Request) {
       );
     }
 
-    // Handle potential empty body
-    let body: Record<string, unknown>;
-    try {
-      body = await request.json();
-    } catch (_e) {
-      return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
-    }
-
-    const { word, dayIndex } = body;
-
-    if (!word || typeof word !== "string") {
-      return NextResponse.json({ error: "Патрабуецца слова" }, { status: 400 });
-    }
-
-    if (!dayIndex || typeof dayIndex !== "number") {
+    // Validate dayIndex parameter
+    const currentDayIndex = gameService.getDailySecret().dayIndex;
+    if (!validateDayIndex(dayIndex, currentDayIndex)) {
       return NextResponse.json(
-        { error: "Патрабуецца dayIndex" },
+        { error: "Недапушчальны індэкс дня" },
         { status: 400 },
       );
     }
 
-    // Validate dayIndex parameter
-    const currentDayIndex = gameService.getDailySecret().dayIndex;
-    if (!validateDayIndex(dayIndex, currentDayIndex)) {
-      return NextResponse.json({ error: "Invalid dayIndex" }, { status: 400 });
-    }
-
     const result = gameService.makeGuess(word, dayIndex);
 
-    // Return the dayIndex that was used (provided or current)
-    const responseDayIndex = dayIndex ?? gameService.getDailySecret().dayIndex;
-
-    return NextResponse.json({
-      ...result,
-      dayIndex: responseDayIndex,
-    });
+    return NextResponse.json(
+      { ...result, dayIndex },
+      {
+        headers: {
+          "Cache-Control": "public, s-maxage=86400",
+        },
+      },
+    );
   } catch (error) {
     console.error("API /api/guess Error:", error);
     return NextResponse.json({ error: "Памылка сервера" }, { status: 500 });

@@ -160,15 +160,11 @@ export function useGame(): UseGameReturn {
       setError(null);
 
       try {
-        const res = await fetch("/api/guess", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            word: wordToGuess,
-            sessionId,
-            dayIndex: sessionDayIndex,
-          }),
+        const guessParams = new URLSearchParams({
+          word: wordToGuess,
+          dayIndex: String(sessionDayIndex),
         });
+        const res = await fetch(`/api/guess?${guessParams}`);
 
         const data = await res.json();
 
@@ -263,7 +259,6 @@ export function useGame(): UseGameReturn {
       loading,
       won,
       guesses,
-      sessionId,
       sessionDayIndex,
       dayIndex,
       trackGuess,
