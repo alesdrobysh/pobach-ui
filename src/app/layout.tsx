@@ -38,21 +38,12 @@ export const metadata: Metadata = {
     siteName: "Побач",
     locale: "be_BY",
     type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Побач - Беларуская гульня ў словы",
-      },
-    ],
   },
 
   twitter: {
     card: "summary_large_image",
     title: "Побач - Беларуская гульня ў словы",
     description: "Адгадайце сакрэтнае беларускае слова",
-    images: ["/og-image.png"],
   },
 
   keywords: [
