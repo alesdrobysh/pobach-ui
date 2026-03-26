@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { gameService, initializeGameService } from "@/lib/container";
 import { validateDayIndex } from "@/lib/utils";
 
+const MIN_HINT_RANK = 1000;
+
 export async function POST(request: Request) {
   try {
     // Ensure service is initialized (lazy loading)
@@ -54,9 +56,16 @@ export async function POST(request: Request) {
 
     usedRanks.push(1); // never reveal the first rank
 
-    // 1. Пачатковая мэта - палова найлепшага рангу
-    let targetRank = Math.ceil(bestRank / 2);
-    if (targetRank < 1) targetRank = 1;
+    const isFirstHint = usedRanks.length === 1; // only contains the sentinel 1
+
+    // 1. Пачатковая мэта
+    let targetRank: number;
+    if (isFirstHint && bestRank < MIN_HINT_RANK * 2) {
+      targetRank = MIN_HINT_RANK;
+    } else {
+      targetRank = Math.ceil(bestRank / 2);
+      if (targetRank < 1) targetRank = 1;
+    }
 
     // 2. Калі гэты ранг ужо адкрыты, шукаем найбліжэйшы неадкрыты (ідзем павелічэннем нумара)
     // Гэта дазваляе атрымаць словы 3, 4, 5..., калі 2 ужо ёсць.
