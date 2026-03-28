@@ -2,6 +2,12 @@
 
 A daily semantic word guessing game for the Belarusian language, inspired by [Contexto](https://contexto.me/) and [Semantle](https://semantle.com/).
 
+<p>
+  <img src="screenshots/screenshot-1.png" width="30%" />
+  <img src="screenshots/screenshot-2.png" width="30%" />
+  <img src="screenshots/screenshot-3.png" width="30%" />
+</p>
+
 ## How it works
 
 Every day a new secret word is chosen. Players submit guesses and the game ranks each guess by semantic similarity using ML word embeddings — the closer the meaning, the lower the rank number. The goal is to find the secret word.
