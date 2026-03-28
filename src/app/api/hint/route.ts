@@ -56,23 +56,23 @@ export async function POST(request: Request) {
 
     usedRanks.push(1); // never reveal the first rank
 
-    const isFirstHint = usedRanks.length === 1; // only contains the sentinel 1
-
-    // 1. Пачатковая мэта
-    let targetRank: number;
-    if (isFirstHint && bestRank < MIN_HINT_RANK * 2) {
-      targetRank = MIN_HINT_RANK;
-    } else {
-      targetRank = Math.ceil(bestRank / 2);
-      if (targetRank < 1) targetRank = 1;
+    // 1. Initial goal - half of the best rank
+    let targetRank = Math.ceil(bestRank / 2);
+    if (targetRank < 1) {
+      targetRank = 1;
     }
 
-    // 2. Калі гэты ранг ужо адкрыты, шукаем найбліжэйшы неадкрыты (ідзем павелічэннем нумара)
-    // Гэта дазваляе атрымаць словы 3, 4, 5..., калі 2 ужо ёсць.
+    // 2. If the hint is revealed too far, reveal it closer to the top
+    if (targetRank > MIN_HINT_RANK) {
+      targetRank = MIN_HINT_RANK;
+    }
+
+    // 3. If this rank is already revealed, find the nearest unrevealed one (incrementing the number)
+    // This allows getting words 3, 4, 5..., if 2 is already present.
     while (usedRanks.includes(targetRank)) {
       targetRank++;
 
-      // Бяспека: не выходзім за межы разумнага
+      // Safety: don't go beyond reasonable limits
       if (targetRank > 100000) break;
     }
 
