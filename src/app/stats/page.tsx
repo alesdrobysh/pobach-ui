@@ -87,13 +87,13 @@ function DistributionChart({ distribution }: DistributionChartProps) {
 
         return (
           <div key={range.label} className="flex items-center gap-3 text-sm">
-            <div className="w-10 text-right text-[var(--text-muted)] shrink-0">
+            <div className="w-14 text-right text-[var(--text-muted)] shrink-0 whitespace-nowrap">
               {range.label}
             </div>
             <div className="flex-1 h-10 bg-[var(--border)] rounded-lg overflow-hidden relative">
               {range.count > 0 ? (
                 <div
-                  className="h-full rounded-lg flex items-center justify-end pr-3 transition-all duration-500"
+                  className="h-full min-w-12 rounded-lg flex items-center justify-end pr-3 transition-all duration-500"
                   style={{
                     width: `${percentage}%`,
                     backgroundColor: range.color,
