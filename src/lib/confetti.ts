@@ -1,5 +1,7 @@
 import confetti from "canvas-confetti";
 
+const COLORS = ["#e58d3f", "#c17a3c", "#f0b27a", "#16a34a", "#84cc16"];
+
 /**
  * Triggers a confetti celebration effect
  */
@@ -9,7 +11,7 @@ export function triggerConfetti(): void {
     particleCount: 100,
     spread: 70,
     origin: { y: 0.6 },
-    colors: ["#7c3aed", "#a78bfa", "#c4b5fd", "#10b981"],
+    colors: COLORS,
   });
 
   // Side bursts (delayed 250ms)
@@ -19,12 +21,17 @@ export function triggerConfetti(): void {
       angle: 60,
       spread: 55,
       origin: { x: 0 },
+      colors: COLORS,
     });
+  }, 250);
+
+  setTimeout(() => {
     confetti({
       particleCount: 50,
       angle: 120,
       spread: 55,
       origin: { x: 1 },
+      colors: COLORS,
     });
-  }, 250);
+  }, 375);
 }
