@@ -15,7 +15,6 @@ export default function GuessCard({ guess, isWin = false }: GuessCardProps) {
   return (
     <article
       className="guess-card"
-      style={{ borderLeftColor: rankColor }}
       aria-label={`Слова ${guess.word}, ранг ${guess.rank}${isWin ? ", вы перамаглі" : ""}`}
     >
       <div className="flex-1 min-w-0">

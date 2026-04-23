@@ -31,7 +31,7 @@ export default function Modal({ children, onClose, title }: ModalProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
-      className="fixed inset-0 bg-black/40 backdrop-blur-md z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-[var(--bg)]/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
     >
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: stopPropagation only prevents overlay close */}
       <div

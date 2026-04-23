@@ -27,10 +27,10 @@ export default function Home() {
     <main className="min-h-screen flex flex-col">
       <Header onHelpClick={() => setShowHelp(true)} />
 
-      <div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-12 pt-3">
+      <div className="flex-1 w-full max-w-[600px] mx-auto px-4 pb-20 pt-8 gap-y-6 flex flex-col">
         {/* Day badge */}
         <div className="flex justify-start">
-          <span className="inline-flex items-center px-2 py-0.5 text-[0.7rem] font-medium text-[var(--accent)]">
+          <span className="inline-flex items-center px-3 py-1 text-[0.75rem] font-medium text-[var(--accent)] bg-[var(--border)] rounded-full">
             Дзень #{getCurrentDayIndex() + 1}
           </span>
         </div>
@@ -69,9 +69,9 @@ export default function Home() {
         )}
 
         {state.guesses.length === 0 ? (
-          <div className="mt-4">
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm">
-              <h2 className="font-serif text-2xl font-bold text-[var(--text)] mb-4">
+          <div className="mt-6">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-8">
+              <h2 className="font-serif text-3xl font-bold text-[var(--text)] mb-6">
                 Як гуляць?
               </h2>
               <RulesComponent />
